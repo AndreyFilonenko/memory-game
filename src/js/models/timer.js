@@ -2,7 +2,8 @@ export default class Timer {
     constructor() {
         this.value = 0;
         this.state = "stopped";
-        this.startTime = null;
+        this.startTime = null;        
+        console.log("Timer");
     }
 
     start() {

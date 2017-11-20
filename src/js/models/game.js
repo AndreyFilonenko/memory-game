@@ -3,8 +3,9 @@ import Timer from './timer';
 
 export default class Game {
     constructor(fieldSize) {
-        this.gameField = getNewGameField(fieldSize);
+        //this.gameField = getNewGameField(fieldSize);
         this.timer = new Timer();
+        console.log("Game fieldSize:" + fieldSize);
     }
 
     start() {
@@ -19,7 +20,7 @@ export default class Game {
         this.cardState = "found";
     }
 
-    getNewGameField(fieldSize) {
+    static getNewGameField(fieldSize) {
         var gameField = new Array(fieldSize);
         for (var i = 1; i <= gameField.length / 2; i++) {
             gameField[i] = new Card(i);

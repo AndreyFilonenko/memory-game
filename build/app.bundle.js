@@ -84,6 +84,7 @@ var Card = function () {
 
         this.cardId = id;
         this.cardState = "facedown";
+        console.log("Card id:" + id);
     }
 
     _createClass(Card, [{
@@ -143,6 +144,7 @@ var Timer = function () {
         this.value = 0;
         this.state = "stopped";
         this.startTime = null;
+        console.log("Timer");
     }
 
     _createClass(Timer, [{
@@ -204,10 +206,14 @@ var _timer = __webpack_require__(1);
 
 var _timer2 = _interopRequireDefault(_timer);
 
+var _app = __webpack_require__(5);
+
+var _app2 = _interopRequireDefault(_app);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var card = new _card2.default(1);
-var timer = new _timer2.default();
+//var timer = new Timer();
 var game = new _game2.default(4);
 
 /***/ }),
@@ -239,8 +245,9 @@ var Game = function () {
     function Game(fieldSize) {
         _classCallCheck(this, Game);
 
-        this.gameField = getNewGameField(fieldSize);
+        //this.gameField = getNewGameField(fieldSize);
         this.timer = new _timer2.default();
+        console.log("Game fieldSize:" + fieldSize);
     }
 
     _createClass(Game, [{
@@ -257,7 +264,7 @@ var Game = function () {
         value: function end() {
             this.cardState = "found";
         }
-    }, {
+    }], [{
         key: 'getNewGameField',
         value: function getNewGameField(fieldSize) {
             var gameField = new Array(fieldSize);
@@ -276,6 +283,12 @@ var Game = function () {
 }();
 
 exports.default = Game;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
