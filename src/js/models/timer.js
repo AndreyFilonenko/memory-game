@@ -7,14 +7,14 @@ export default class Timer {
     }
 
     start() {
-        if (this.state = "stopped") {
+        if (this.state == "stopped") {
             this.state = "started";
             this.startTime = Date.now();
         }
     }
 
     stop() {
-        if (this.state = "started") {
+        if (this.state == "started") {
             this.state = "stopped";
             this.value += Math.round((Date.now() - this.startTime) / 1000);
             this.startTime = null;
@@ -22,7 +22,7 @@ export default class Timer {
     }
 
     getCurrentValue() {
-        if (this.state = "started") {
+        if (this.state == "started") {
             return Math.round((Date.now() - this.startTime) / 1000);
         } else {
             return this.value;
