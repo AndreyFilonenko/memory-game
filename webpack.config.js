@@ -14,6 +14,12 @@ module.exports = {
     module: {
         rules: [
             {
+                enforce: 'pre',
+                test: /\.js$/,
+                include: path.resolve(__dirname, "./src/js"),
+                use: 'eslint-loader'
+            },
+            {
                 test: /\.js$/,
                 exclude: /(node_modules|bower_components)/,
                 use: [
