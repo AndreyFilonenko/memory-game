@@ -1,0 +1,11 @@
+{
+  "name": "memory-game",
+  "version": "1.0.0",
+  "description": "test task for anadea it-gym",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "a.filonenko",
+  "license": "ISC"
+}
