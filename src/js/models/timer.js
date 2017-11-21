@@ -2,8 +2,7 @@ export default class Timer {
     constructor() {
         this.value = 0;
         this.state = "stopped";
-        this.startTime = null;        
-        console.log("Timer");
+        this.startTime = null;
     }
 
     start() {
@@ -23,7 +22,7 @@ export default class Timer {
 
     getCurrentValue() {
         if (this.state == "started") {
-            return Math.round((Date.now() - this.startTime) / 1000);
+            return this.value + Math.round((Date.now() - this.startTime) / 1000);
         } else {
             return this.value;
         }

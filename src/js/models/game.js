@@ -1,30 +1,37 @@
-import Card from './card';
-import Timer from './timer';
+import Card from "./card";
+import Timer from "./timer";
 
 export default class Game {
     constructor(fieldSize) {
-        //this.gameField = getNewGameField(fieldSize);
+        this.gameField = Game.getNewGameField(fieldSize);
         this.timer = new Timer();
-        console.log("Game fieldSize:" + fieldSize);
+        this.clicks = 0;                
+        this.startTimeoutId = null;
     }
 
-    start() {
-        if (this.cardState == "facedown") {
-            this.cardState = "faceup";
-        } else if (this.cardState == "faceup") {
-            this.cardState = "facedown";
-        }
+    start() {        
+        this.flipAll();
+        this.startTimeoutId = setTimeout("", Math.sqrt(this.gameField.length) * 1000);
+        this.flipAll();
+        this.timer.start();        
     }
 
     end() {
-        this.cardState = "found";
+        this.timer.stop();
+        console.log("1");
+    }
+
+    flipAll() {
+        for (var i = 0; i < this.gameField.length; i++) {
+            this.gameField[i].flip();
+        }
     }
 
     static getNewGameField(fieldSize) {
         var gameField = new Array(fieldSize);
-        for (var i = 1; i <= gameField.length / 2; i++) {
-            gameField[i] = new Card(i);
-            gameField[i + gameField.length / 2] = new Card(i);
+        for (var i = 0; i < gameField.length / 2; i++) {
+            gameField[i] = new Card(i + 1);
+            gameField[i + gameField.length / 2] = new Card(i + 1);
         }
         gameField = gameField.sort(function () {
             return Math.random() - 0.5;

@@ -2,7 +2,6 @@ export default class Card {
     constructor(id) {
         this.cardId = id;
         this.cardState = "facedown";
-        console.log("Card id:" + id);
     }
 
     flip() {
@@ -21,11 +20,11 @@ export default class Card {
         return (this.cardId == otherCard.cardId);
     }
 
-    draw(gs, pos) {
+    getCardIdByState() {
         if (this.cardState == "facedown") {
-            gs.draw("back", pos);
+            return 0;
         } else {
-            gs.draw(this.cardId, pos);
+            return this.cardId;
         }
     }
 }
