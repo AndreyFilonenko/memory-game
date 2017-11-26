@@ -1,6 +1,11 @@
+"use strict"
+
 import Card from "./models/card";
-import Game from "./models/game";
 import Timer from "./models/timer";
+import Game from "./models/game";
+import ScoresRepository from "./infrastructure/scoresRepository";
+import GameView from "./views/gameView";
+import GameController from "./controllers/gameController";
 import styles from "./../styles/app.css";
 
 console.log(styles.canvas);

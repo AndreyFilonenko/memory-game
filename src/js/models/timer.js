@@ -1,3 +1,5 @@
+"use strict"
+
 export default class Timer {
     constructor() {
         this.value = 0;

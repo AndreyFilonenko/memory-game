@@ -1,3 +1,5 @@
+"use strict"
+
 import Card from "./card";
 import Timer from "./timer";
 
@@ -13,12 +15,11 @@ export default class Game {
         this.flipAll();
         this.startTimeoutId = setTimeout("", Math.sqrt(this.gameField.length) * 1000);
         this.flipAll();
-        this.timer.start();        
+        this.timer.start();
     }
 
     end() {
         this.timer.stop();
-        console.log("1");
     }
 
     flipAll() {
