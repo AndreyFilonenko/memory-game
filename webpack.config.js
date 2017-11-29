@@ -34,17 +34,17 @@ module.exports = {
                 ]
             },
             {
-                test: /\.css$/,
+                test: /\.scss$/,
                 use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: "css-loader"
+                  fallback: "style-loader",
+                  use: ["css-loader", "sass-loader"]
                 })
-            }
+              }
         ]
     },
     plugins: [
         new ExtractTextPlugin("app.css"),
-        new webpack.NoErrorsPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
         new webpack.DefinePlugin({
             NODE_ENV: JSON.stringify(NODE_ENV)
         })

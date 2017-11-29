@@ -3,10 +3,10 @@
 import Card from "./models/card";
 import Timer from "./models/timer";
 import Game from "./models/game";
-import ScoresRepository from "./infrastructure/scoresRepository";
-import GameView from "./views/gameView";
-import GameController from "./controllers/gameController";
-import styles from "./../styles/app.css";
+// import ScoresRepository from "./infrastructure/scoresRepository";
+// import GameView from "./views/gameView";
+// import GameController from "./controllers/gameController";
+import styles from "./../styles/sass/app.scss";
 
 console.log(styles.canvas);
 

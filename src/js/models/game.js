@@ -9,6 +9,8 @@ export default class Game {
         this.timer = new Timer();
         this.clicks = 0;                
         this.startTimeoutId = null;
+        this.isFirstClicked = false;
+        this.firstClicked = null;
     }
 
     start() {        
@@ -28,15 +30,39 @@ export default class Game {
         }
     }
 
+    cardClickHandler(card) {
+        this.clicks++;
+        if (this.isFirstClicked === false) {
+            this.isFirstClicked = true;
+            this.firstClicked = card;
+            this.gameField[card.cardPosition - 1].flip();
+        } else {            
+            this.gameField[card.cardPosition - 1].flip();
+            if (this.firstClicked.cardId === card.cardId) {
+                this.gameField[card.cardPosition - 1].found();
+                this.gameField[this.firstClicked.cardPosition - 1].found();
+            } else {
+                setTimeout(() => {
+                    this.gameField[card.cardPosition - 1].flip();
+                    this.gameField[this.firstClicked.cardPosition - 1].flip();
+                }, 1000);
+            }
+            this.isFirstClicked === false;
+        }
+    }
+
     static getNewGameField(fieldSize) {
         var gameField = new Array(fieldSize);
-        for (var i = 0; i < gameField.length / 2; i++) {
+        for (let i = 0; i < gameField.length / 2; i++) {
             gameField[i] = new Card(i + 1);
             gameField[i + gameField.length / 2] = new Card(i + 1);
         }
         gameField = gameField.sort(function () {
             return Math.random() - 0.5;
         });
+        for (let i = 0; i < gameField.length; ++i) {
+            gameField[i].cardPosition = i + 1;            
+        }
         return gameField;
     }
 }
