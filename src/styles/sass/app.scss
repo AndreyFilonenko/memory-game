@@ -1,13 +1,28 @@
-.fullscreen {
-    position:absolute; top:0; left:0; display: block;
-    padding: 0; border: 0; margin: 0; overflow: hidden;
-    width:100%; height:100%;
-    background-color: black; color: white;
+@import "_config";
+@import "_screens";
+@import "_card";
+@import "_button";
+
+body,
+html {
+    height: 100%;
 }
-.canvas {
-    position:absolute; top:0; left:0; display: block;
-    padding: 0; border: 0; margin: 0; overflow: hidden;
-    height:100%; width: auto;
-    background-color: green;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
+
+body {
+    color: $color--grey;
+    background-color: $color--blue;
+    font-family: $font-family--primary;
+    font-size: $font-size--medium;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.container {
+    max-width: 1024px;
+    min-width: 480px;
+    margin: auto;
 }

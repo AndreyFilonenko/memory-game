@@ -1,0 +1,29 @@
+$font-family--primary : 'Roboto Slab', serif;
+
+$font-size--small : 14px;
+$font-size--medium : 18px;
+$font-size--large : 24px;
+
+$color--dkgrey : rgb(40,40,40);
+$color--grey : rgb(120,120,120);
+$color--ltgrey : rgb(180,180,180);
+$color--xltgrey : rgb(220, 220, 220);
+
+$color--blue : rgb(40,170,220);
+$color--ltblue : lighten($color--blue, 30%);
+
+$color--red : rgb(255,60,80);
+$color--dkred : darken($color--red, 20%);
+$color--xdkred : darken($color--red, 40%);
+
+$color--green : rgb(40, 200, 80);
+
+$color--white : rgb(255,255,255);
+
+$card--transition-time : 0.2s;
+
+$sizes : (
+  16 : 16,
+  36 : 36,
+  64 : 64
+);

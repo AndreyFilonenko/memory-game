@@ -4,7 +4,7 @@ import Card from "./models/card";
 import Timer from "./models/timer";
 import Game from "./models/game";
 // import ScoresRepository from "./infrastructure/scoresRepository";
-// import GameView from "./views/gameView";
+import GameView from "./views/gameView";
 // import GameController from "./controllers/gameController";
 import styles from "./../styles/sass/app.scss";
 
@@ -19,3 +19,8 @@ timer.start();
 
 var game = new Game(4);
 game.start();
+
+var view = new GameView();
+//view.renderWinScreen(5, 15);
+//view.renderGame();
+view.renderMenu();

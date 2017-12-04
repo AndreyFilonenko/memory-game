@@ -1,0 +1,86 @@
+@import "node_modules/mathsass/dist/math";
+
+.mg__wrapper {
+    margin: 0 auto;
+    max-width: 55%;    
+}
+
+.mg__contents {
+    position: relative;
+    max-width: 100%;
+    padding-top: 100%;
+    margin-left: -5px;
+    margin-right: -5px;
+  }
+
+.mg__card {
+    position: absolute;
+    padding: 5px;
+}
+
+@each $size, $cards in $sizes {
+    
+    $x : sqrt($cards);
+    $y : $x;
+    
+    .mg__size-#{$size} .mg__card {
+        width: (1 / $x) * 100%;
+        height: (1 / $y) * 100%;
+    }
+    
+    .mg__size-#{$size} {
+        @for $i from 1 through $cards {
+            $top : (floor(($i - 1) / $x) / $y) * 100%;
+            $left : ((($i - 1) % $x) / $x) * 100%;
+            .mg__card-#{$i} {
+                top: $top;
+                left: $left;
+            }
+        }
+    }     
+}
+
+.mg__card--inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+  
+.mg__card--outside,
+.mg__card--inside {    
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0; left: 0;
+    width: 90%;
+    height: 90%;
+    backface-visibility: hidden;
+    transition: transform 0.3s, background 0.3s;
+}
+  
+.mg__card--outside {
+    background-color: $color--ltgrey;
+    box-shadow: 0 0 0 1px $color--grey;
+}
+  
+.mg__card--inside {
+    background-color: $color--ltgrey;
+    box-shadow: 0 0 0 1px $color--grey;
+    transform: rotateY(-180deg);
+}
+  
+.mg__card--inner.flipped .mg__card--outside {
+    transform: rotateY(-180deg);
+}
+  
+.mg__card--inner.flipped .mg__card--inside {
+    transform: rotateY(0);
+}
+  
+//   /* some transitions for correct guesses - only needs to happen on card inside */
+  
+//   .mg__tile--inner.flipped.correct .mg__tile--inside {
+//     background-color: $color--yellow;
+//   }
