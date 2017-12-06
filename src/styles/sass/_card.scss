@@ -49,9 +49,10 @@
   
 .mg__card--outside,
 .mg__card--inside {    
-    display:flex;
-    justify-content: center;
-    align-items: center;
+    // display:flex;
+    // justify-content: center;
+    // align-items: center;
+    display: block;
     position: absolute;
     top: 0; left: 0;
     width: 90%;

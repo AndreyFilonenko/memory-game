@@ -96,7 +96,10 @@ export default class GameView {
         }
     }
 
-    renderGame() {
+    renderGame(cards) {
+        if (!cards || cards.length != this.gameFieldSize) {
+            throw new Error("Invalid GameView renderGame args.");
+        }
         this.clearGame();
         this.gameAction.innerHTML =
             "<div class=\"mg__game-line--centered\">\
@@ -124,15 +127,17 @@ export default class GameView {
         this.gameActionWrapper.className = "mg__wrapper";
         this.gameActionContainer = document.createElement("div");
         this.gameActionContainer.className = "mg__contents mg__size-" + this.gameFieldSize;
+        this.gameActionContainer.id = "mg__contents";
 
         var path = this.skinPath;
-        for (var i = 0; i < this.gameFieldSize; i++) {
-            var n = i + 1;
+        for (var i = 0; i < cards.length; i++) {
+            var n = cards[i].cardId;
             this.gameActionContainer.innerHTML +=
-                "<div class=\"mg__card mg__card-" + n + "\">\
-                <div class=\"mg__card--inner\" data-id=\"" + n + "\">\
+                "<div class=\"mg__card mg__card-" + (i + 1) + "\">\
+                <div class=\"mg__card--inner\">\
                 <span class=\"mg__card--outside\"><img src=\"img/" + path + "/00.png\"></span>\
-                <span class=\"mg__card--inside\"><img src=\"\"></span>\
+                <span class=\"mg__card--inside\"><img src=\"img/" 
+                    + path + "/" + (n >= 10 ? "" : "0") + n + ".png\"></span>\
                 </div>\
                 </div>";
         }
@@ -140,6 +145,17 @@ export default class GameView {
         this.gameAction.appendChild(this.gameActionWrapper);
         this.game.appendChild(this.gameAction);
         this.setGameEvents();
+    }
+
+    flipAllCards() {
+        var cardNodes = document.querySelectorAll(".mg__card--inner");
+        var cardNodesArr = Array.from(cardNodes);
+        
+        for (let i = 0; i < cardNodesArr.length; ++i) {
+            console.log("flip");
+            console.log(cardNodesArr[i].classList);
+            cardNodesArr[i].classList.add("flipped");
+        }
     }
 
     setGameEvents() {
@@ -197,8 +213,23 @@ export default class GameView {
         });
     }
 
-    renderScores() {
+    renderScores(size, scoresBySize) {
         this.clearGame();
+        var table = "<table><thead><tr><td>Имя</td><td>Дата и время игры</td><td>Длительность</td>\
+        <td>Счет</td></thead><tbody>";
+        if (scoresBySize.length != 0) {
+            for (let i = 0; i < scoresBySize.length; i++) {
+                table += 
+                    "<tr><td>" + scoresBySize[i].name + "</td>\
+                    <td>" + (new Date(scoresBySize[i].id)).toString + "</td>\
+                    <td>" + scoresBySize[i].duration + "</td>\
+                    <td>" + scoresBySize[i].score + "</td></tr>";
+            }
+        } else {
+            table += "<tr><td class=\"wide\" colspan=\"4\">Нет результатов игр на поле размером "
+                + size + ".</td></tr>";
+        }
+        table += "</tbody></table>";
         this.gameScores.innerHTML =
             "<div class=\"mg__scores-line--centered\">\
             <h2 class=\"mg__scores-heading\">Рекорды</h2>\
@@ -208,55 +239,30 @@ export default class GameView {
             Размеры полей:\
             </div>\
             <div class=\"mg__scores-line-item\">\
-            <button id=\"mg__button--small\" class=\"mg__button mg__button--action\">Маленькое</button>\
+            <button data-size=\"16\" class=\"mg__button mg__button--action\">Маленькое</button>\
             </div>\
             <div class=\"mg__scores-line-item\">\
-            <button id=\"mg__button--medium\" class=\"mg__button mg__button--action\">Среднее</button>\
+            <button data-size=\"36\" class=\"mg__button mg__button--action\">Среднее</button>\
             </div>\
             <div class=\"mg__scores-line-item\">\
-            <button id=\"mg__button--big\" class=\"mg__button mg__button--action\">Большое</button>\
+            <button data-size=\"64\" class=\"mg__button mg__button--action\">Большое</button>\
             </div>\
             <div class=\"mg__scores-line-item\">\
             <button id=\"mg__button--reset\" class=\"mg__button mg__button--cancel\">Назад в меню</button>\
             </div>\
             </div>\
             <div class=\"mg__scores-line--centered\">\
-            <div id=\"mg__scores-table\" class=\"mg__scores-table\">\
-            <span>Выберите размер поля:</span>\
-            </div>\
+            <div id=\"mg__scores-table\" class=\"mg__scores-table\">" + table +
+            "</div>\
             </div>";
+        // let sizeButtons = document.getElementsByClassName("mg__button mg__button--action");
+        // for (let j = 0; j < sizeButtons.length; j++) {
+        //     console.log(typeof sizeButtons[j].getAttribute("data-size"));
+        //     if (sizeButtons[j].getAttribute("data-size") == size) {                
+        //         sizeButtons[j].classList.add("selected");
+        //     }
+        // }
         this.game.appendChild(this.gameScores);
-        this.setScoresEvents();
-    }
-
-    setScoresEvents() {
-        var dummy = "<tr> <td>Имя1</td> <td>15.01.17 11:16</td> <td>100500</td> <td>100500</td></tr>\
-                    <tr> <td>Имя2</td> <td>17.03.17 13:26</td> <td>200600</td> <td>200600</td></tr>\
-                    <tr> <td>Имя3</td> <td>19.05.17 15:46</td> <td>300700</td> <td>300700</td></tr>"
-        document.getElementById("mg__button--small").addEventListener("click", () => {
-            this.renderScoreTableBySize(dummy);
-        });
-
-        document.getElementById("mg__button--medium").addEventListener("click", () => {
-            this.renderScoreTableBySize(dummy);
-        });
-
-        document.getElementById("mg__button--big").addEventListener("click", () => {
-            this.renderScoreTableBySize(dummy);
-        });
-    }
-
-    renderScoreTableBySize(inner) {
-        var scoreTable = document.getElementById("mg__scores-table");
-        scoreTable.innerHTML = "<table>\
-                                <thead>\
-                                <tr>\
-                                <td>Имя</td>\
-                                <td>Дата и время игры</td>\
-                                <td>Длительность</td>\
-                                <td>Счет</td>\
-                                </thead>\
-                                <tbody>" + inner + "</tbody></table>";
     }
 
     clearGame() {
@@ -276,7 +282,6 @@ export default class GameView {
 
     bindShowMenu(handler) {
         document.getElementById("mg__button--reset").addEventListener("click", () => {
-            this.renderGame();
             handler();
         });
     }
@@ -284,7 +289,6 @@ export default class GameView {
     bindStartGame(handler) {
         document.getElementById("mg__button--start").addEventListener("click", () => {
             if (this.gameFieldSize != null && this.skinPath != null) {
-                this.renderGame();
                 handler(this.gameFieldSize);
             }
         });
@@ -292,9 +296,17 @@ export default class GameView {
 
     bindShowScores(handler) {
         document.getElementById("mg__button--scores").addEventListener("click", () => {
-            this.renderScores();
             handler();
         });
+    }
+
+    bindShowScoresBySize(handler) {
+        var sizeButtons = document.getElementsByClassName("mg__button mg__button--action");
+        for (let i = 0; i < sizeButtons.length; i++) {
+            sizeButtons[i].addEventListener("click", () => {
+                handler(Number.parseInt(sizeButtons[i].getAttribute("data-size")));
+            });
+        }
     }
 
     bindSaveScore(handler) {

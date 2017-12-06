@@ -7,16 +7,16 @@ export default class Game {
     constructor(fieldSize) {
         this.gameField = Game.getNewGameField(fieldSize);
         this.timer = new Timer();
-        this.clicks = 0;                
+        this.clicks = 0;
         this.startTimeoutId = null;
         this.isFirstClicked = false;
         this.firstClicked = null;
     }
 
     start() {        
-        this.flipAll();
-        this.startTimeoutId = setTimeout("", Math.sqrt(this.gameField.length) * 1000);
-        this.flipAll();
+        // this.flipAll();
+        // this.startTimeoutId = setTimeout("", Math.sqrt(this.gameField.length) * 1000);
+        // this.flipAll();
         this.timer.start();
     }
 
@@ -58,17 +58,23 @@ export default class Game {
     }
 
     static getNewGameField(fieldSize) {
-        var gameField = new Array(fieldSize);
-        for (let i = 0; i < gameField.length / 2; i++) {
-            gameField[i] = new Card(i + 1);
-            gameField[i + gameField.length / 2] = new Card(i + 1);
+        var gameField = new Array();
+        for (let i = 0; i < fieldSize / 2; i++) {
+            gameField.push(new Card(i + 1));
+            gameField.push(new Card(i + 1));
         }
-        gameField = gameField.sort(function () {
-            return Math.random() - 0.5;
-        });
+        gameField = Game.shuffle(gameField);
         for (let i = 0; i < gameField.length; ++i) {
             gameField[i].cardPosition = i + 1;
         }
         return gameField;
+    }
+
+    static shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
     }
 }

@@ -26,8 +26,17 @@ export default class GameController {
 
     startGame(fieldSize) {
         this.game = new Game(fieldSize);
+        this.view.flipAllCards();
+        // this.startTimeoutId = setTimeout("", Math.sqrt(fieldSize) * 1000);
+        // this.view.flipAllCards();
         this.game.start();
+        this.view.renderGame(this.game.gameField);
         this.view.bindShowMenu(this.showMenu.bind(this));
+    }
+
+    refreshStats() {
+        this.view.setValue("clicks", this.game.clicks);
+        this.view.setValue("time", this.game.timer.getCurrentValue());
     }
 
     showWinScreen() {
@@ -49,7 +58,10 @@ export default class GameController {
         this.showMenu();
     }
     
-    showScores() {
+    showScores(fieldSize = 16) {
+        var scoresBySize = this.repo.getAllBySize(fieldSize);
+        this.view.renderScores(fieldSize, scoresBySize);
         this.view.bindShowMenu(this.showMenu.bind(this));
+        this.view.bindShowScoresBySize(this.showScores.bind(this));
     }
 }

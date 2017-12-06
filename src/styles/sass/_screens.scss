@@ -18,11 +18,15 @@
     padding: 10px;
 }
 
-.mg__menu-line-item,
+.mg__menu-line-item {
+    display: inline-block;
+    vertical-align: top;
+}
+
 .mg__game-line-item,
 .mg__scores-line-item {
     display: inline-block;
-    vertical-align: top;
+    vertical-align: center;
 }
 
 .mg__menu-heading,
@@ -105,5 +109,9 @@
     }
     tbody tr:nth-child(2n) {
         background: $color--ltblue;
+    }
+
+    tbody tr td.wide {
+        padding: 10px;
     }
 }
