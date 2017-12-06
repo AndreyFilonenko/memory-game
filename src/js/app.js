@@ -1,26 +1,16 @@
 "use strict"
 
-import Card from "./models/card";
-import Timer from "./models/timer";
-import Game from "./models/game";
-// import ScoresRepository from "./infrastructure/scoresRepository";
+import ScoresRepository from "./infrastructure/scoresRepository";
 import GameView from "./views/gameView";
-// import GameController from "./controllers/gameController";
+import GameController from "./controllers/gameController";
 import styles from "./../styles/sass/app.scss";
 
 console.log(styles.canvas);
 
-
-var card = new Card(1);
-card.flip();
-
-var timer = new Timer();
-timer.start();
-
-var game = new Game(4);
-game.start();
-
 var view = new GameView();
-//view.renderWinScreen(5, 15);
-//view.renderGame();
-view.renderMenu();
+
+var repo = new ScoresRepository("pairs-memory-game");
+
+var controller = new GameController(view, repo);
+
+window.addEventListener("load", controller.showMenu());

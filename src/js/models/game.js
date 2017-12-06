@@ -51,6 +51,12 @@ export default class Game {
         }
     }
 
+    getScore() {
+        return this.gameField.length * 1000 
+             - this.clicks * 10
+             - Math.floor((this.timer.getCurrentValue() * 10) / 1000);
+    }
+
     static getNewGameField(fieldSize) {
         var gameField = new Array(fieldSize);
         for (let i = 0; i < gameField.length / 2; i++) {
@@ -61,7 +67,7 @@ export default class Game {
             return Math.random() - 0.5;
         });
         for (let i = 0; i < gameField.length; ++i) {
-            gameField[i].cardPosition = i + 1;            
+            gameField[i].cardPosition = i + 1;
         }
         return gameField;
     }
