@@ -22,7 +22,8 @@ $color--yellow : rgb(230, 230, 30);
 
 $color--white : rgb(255,255,255);
 
-$card--transition-time : 0.2s;
+$card-transition-time--short : 0.5s;
+$card-transition-time--normal : 1.0s;
 
 $sizes : (
   16 : 16,

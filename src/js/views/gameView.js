@@ -1,10 +1,6 @@
 "use strict"
 
-// import Card from "./../models/card";
-// import Timer from "./../models/timer";
-// import Game from "./../models/game";
-// import ScoresRepository from "./../infrastructure/scoresRepository";
-import {getFormattedDateTime, getFormattedTime} from "./../helpers/helpers";
+import Helpers from "./../helpers/helpers";
 
 export default class GameView {
     constructor() {
@@ -147,7 +143,7 @@ export default class GameView {
             var n = cards[i].cardId;
             this.gameActionContainer.innerHTML +=
                 "<div class=\"mg__card mg__card-" + (i + 1) + "\">\
-                <div class=\"mg__card--inner\" data-id=\"" + n + "\">\
+                <div class=\"mg__card--inner\" data-position=\"" + (i + 1) + "\">\
                 <span class=\"mg__card--outside\"><img src=\"img/" + path + "/00.png\"></span>\
                 <span class=\"mg__card--inside\"><img src=\"img/"
                 + path + "/" + (n >= 10 ? "" : "0") + n + ".png\"></span>\
@@ -157,7 +153,6 @@ export default class GameView {
         this.gameActionWrapper.appendChild(this.gameActionContainer);
         this.gameAction.appendChild(this.gameActionWrapper);
         this.game.appendChild(this.gameAction);
-        this.setGameEvents();
     }
 
     flipAllCards() {
@@ -172,15 +167,6 @@ export default class GameView {
         if (flippedCard.parentNode !== null) {
             flippedCard.classList.remove("flipped");
         }
-    }
-
-    setGameEvents() {
-        var suspend = document.querySelector("#mg__button--suspend");
-
-        suspend.addEventListener("click", () => {
-            this.setValue("clicks", 15);
-            this.setValue("time", 55);
-        });
     }
 
     setValue(element, value) {
@@ -241,8 +227,8 @@ export default class GameView {
             for (let i = 0; i < scoresBySize.length; i++) {
                 table +=
                     "<tr><td>" + scoresBySize[i].name + "</td>\
-                    <td>" + getFormattedDateTime(scoresBySize[i].id) + "</td>\
-                    <td>" + getFormattedTime(scoresBySize[i].duration) + "</td>\
+                    <td>" + Helpers.getFormattedDateTime(scoresBySize[i].id) + "</td>\
+                    <td>" + Helpers.getFormattedTime(scoresBySize[i].duration) + "</td>\
                     <td>" + scoresBySize[i].score + "</td></tr>";
             }
         } else {
@@ -313,14 +299,39 @@ export default class GameView {
         });
     }
 
+    bindSuspendOrResumeGame(handler) {
+        var suspend = document.querySelector("#mg__button--suspend");
+        var cardNodes = document.querySelectorAll(".mg__card--inner");
+        
+        suspend.addEventListener("click", () => {
+            if (suspend.classList.contains("mg__button--action")) {
+                suspend.classList.remove("mg__button--action");
+                suspend.classList.add("mg__button--cancel");
+                suspend.innerHTML = "Возобновить";
+                for (let i = 0; i < cardNodes.length; ++i) {
+                    cardNodes[i].classList.toggle("paused");
+                }
+            } else if (suspend.classList.contains("mg__button--cancel")) {
+                suspend.classList.remove("mg__button--cancel");
+                suspend.classList.add("mg__button--action");
+                suspend.innerHTML = "Пауза";
+                for (let i = 0; i < cardNodes.length; ++i) {
+                    cardNodes[i].classList.toggle("paused");
+                }
+            }
+            handler();
+        });
+    }
+
     bindCardClickHandler(handler) {
         var cards = document.querySelectorAll(".mg__card--inner");
         for (let i = 0; i < cards.length; i++) {
             cards[i].addEventListener("click", () => {
-                console.log(cards[i]);
-                if (!cards[i].classList.contains("flipped") && !cards[i].classList.contains("solved")) {
+                if (!cards[i].classList.contains("flipped") 
+                    && !cards[i].classList.contains("solved")
+                    && !cards[i].classList.contains("paused")) {
                     cards[i].classList.add("flipped");
-                    handler(Number.parseInt(cards[i].getAttribute("data-id")));
+                    handler(Number.parseInt(cards[i].getAttribute("data-position")));
                 }
             });
         }

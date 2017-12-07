@@ -13,5 +13,6 @@ var repo = new ScoresRepository("pairs-memory-game");
 
 var controller = new GameController(view, repo);
 controller.setMaxField(64);
+//controller.setFakeRepoData();
 
 window.addEventListener("load", controller.showMenu());

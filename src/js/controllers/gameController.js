@@ -1,7 +1,5 @@
 "use strict"
 
-// import Card from "./../models/card";
-// import Timer from "./../models/timer";
 import Game from "./../models/game";
 import GameView from "./../views/gameView";
 import ScoresRepository from "./../infrastructure/scoresRepository";
@@ -24,7 +22,7 @@ export default class GameController {
         this.maxFieldSize = maxFieldSize;
     }
 
-    showMenu() {        
+    showMenu() {
         this.game = null;
         this.view.renderMenu();
         this.view.bindStartGame(this.startGame.bind(this));
@@ -32,40 +30,54 @@ export default class GameController {
     }
 
     startGame(fieldSize) {
-        this.game = new Game(fieldSize, this.maxFieldSize);
-        this.game.start();
+        this.game = new Game(fieldSize, this.maxFieldSize); 
         this.view.renderGame(this.game.gameField);
+        this.view.flipAllCards();
+        window.setTimeout(() => {
+            this.view.flipAllCards();
+            this.game.start();
+            this.intervalId = window.setInterval(() => {
+                this.refreshTime();
+            }, 50);
+        }, (fieldSize / 8) * 1000);
         this.view.bindShowMenu(this.showMenu.bind(this));
         this.view.bindCardClickHandler(this.cardClickHandler.bind(this));
+        this.view.bindSuspendOrResumeGame(this.suspendOrResumeGame.bind(this));
     }
 
     cardClickHandler(position) {
         var result = this.game.cardClickHandler(position);
-        switch (result) {
-            case "first":
-                this.firstClicked = position;
-                break;
-        
-            case "second":
-                this.view.flipBack(this.firstClicked);
-                this.view.flipBack(position);
-                this.firstClickedId = null;
-                break;
+        window.setTimeout(() => {
+            switch (result) {
+                case "first":
+                    this.firstClicked = position;
+                    break;
 
-            case "solved":
-                this.view.setSolved(this.firstClicked);
-                this.view.setSolved(position);
-                this.firstClickedId = null;
-                break;
+                case "second":
+                    this.view.flipBack(this.firstClicked);
+                    this.view.flipBack(position);
+                    this.firstClickedId = null;
+                    break;
 
-            case "end":
-                this.endGame();
-                break;
-            
-            default:
-                break;
-        }
+                case "solved":
+                    this.view.setSolved(this.firstClicked);
+                    this.view.setSolved(position);
+                    this.firstClickedId = null;
+                    break;
+
+                case "end":
+                    this.endGame();
+                    break;
+
+                default:
+                    break;
+            }
+        }, 500);
         this.refreshClicks();
+    }
+
+    suspendOrResumeGame() {
+        this.game.suspendOrResume();
     }
 
     endGame() {
@@ -97,19 +109,53 @@ export default class GameController {
 
     saveScore(nickname) {
         this.repo.insert({
-			id: Date.now(),
-			name: nickname,
+            id: Date.now(),
+            name: nickname,
             size: this.game.gameField.length,
             duration: this.game.timer.getCurrentValue(),
             score: this.game.getScore()
         });
         this.showMenu();
     }
-    
+
     showScores(fieldSize = 16) {
         var scoresBySize = this.repo.getAllBySize(fieldSize);
         this.view.renderScores(fieldSize, scoresBySize);
         this.view.bindShowMenu(this.showMenu.bind(this));
         this.view.bindShowScoresBySize(this.showScores.bind(this));
+    }
+
+    setFakeRepoData() {
+        var fake = new Array();
+        for (let i = 0; i < 10; i++) {
+            fake.push({
+                id: Date.now(),
+                name: "Player" + i,
+                size: 16,
+                duration: i * 10,
+                score: i * 100
+            });
+        }
+        for (let i = 0; i < 15; i++) {
+            fake.push({
+                id: Date.now(),
+                name: "Player" + i,
+                size: 36,
+                duration: i * 20,
+                score: i * 200
+            });
+        }
+        for (let i = 0; i < 5; i++) {
+            fake.push({
+                id: Date.now(),
+                name: "Player" + i,
+                size: 64,
+                duration: i * 100,
+                score: i * 1000
+            });
+        }
+        for (let i = 0; i < fake.length; i++) {
+            this.repo.insert(fake[i]);
+        }
     }
 }
