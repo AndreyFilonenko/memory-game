@@ -15,19 +15,23 @@
 .mg__button--action {    
     color: $color--white;    
     background: $color--green;
+    border: 3px solid $color--green;
 }
 
 .mg__button--info {
     color: $color--white;
     background: $color--blue;
+    border: 3px solid $color--blue;
 }
 
 .mg__button--cancel {
     color: $color--white;
     background: $color--red;
+    border: 3px solid $color--red;
 }
 
 .mg__button--disabled {
     color: $color--white;
     background: $color--ltgrey;
+    border: 3px solid $color--ltgrey;
 }

@@ -15,6 +15,13 @@ export default class GameController {
             throw new Error("Invalid GameController ctor args.");
         }
         this.game = null;
+        this.intervalId = null;
+        this.firstClicked = null;
+        this.maxFieldSize = 16;
+    }
+
+    setMaxField(maxFieldSize) {
+        this.maxFieldSize = maxFieldSize;
     }
 
     showMenu() {        
@@ -25,18 +32,59 @@ export default class GameController {
     }
 
     startGame(fieldSize) {
-        this.game = new Game(fieldSize);
-        this.view.flipAllCards();
-        // this.startTimeoutId = setTimeout("", Math.sqrt(fieldSize) * 1000);
-        // this.view.flipAllCards();
+        this.game = new Game(fieldSize, this.maxFieldSize);
         this.game.start();
         this.view.renderGame(this.game.gameField);
         this.view.bindShowMenu(this.showMenu.bind(this));
+        this.view.bindCardClickHandler(this.cardClickHandler.bind(this));
     }
 
-    refreshStats() {
-        this.view.setValue("clicks", this.game.clicks);
-        this.view.setValue("time", this.game.timer.getCurrentValue());
+    cardClickHandler(position) {
+        var result = this.game.cardClickHandler(position);
+        switch (result) {
+            case "first":
+                this.firstClicked = position;
+                break;
+        
+            case "second":
+                this.view.flipBack(this.firstClicked);
+                this.view.flipBack(position);
+                this.firstClickedId = null;
+                break;
+
+            case "solved":
+                this.view.setSolved(this.firstClicked);
+                this.view.setSolved(position);
+                this.firstClickedId = null;
+                break;
+
+            case "end":
+                this.endGame();
+                break;
+            
+            default:
+                break;
+        }
+        this.refreshClicks();
+    }
+
+    endGame() {
+        this.game.end();
+        clearInterval(this.intervalId);
+        this.intervalId = null;
+        this.showWinScreen();
+    }
+
+    refreshTime() {
+        if (this.game.state == "run") {
+            this.view.setValue("time", this.game.timer.getCurrentValue());
+        }
+    }
+
+    refreshClicks() {
+        if (this.game.state == "run") {
+            this.view.setValue("clicks", this.game.clicks);
+        }
     }
 
     showWinScreen() {

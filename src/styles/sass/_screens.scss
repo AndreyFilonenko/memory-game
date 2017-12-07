@@ -27,6 +27,7 @@
 .mg__scores-line-item {
     display: inline-block;
     vertical-align: center;
+    padding: 5px;
 }
 
 .mg__menu-heading,
@@ -75,8 +76,8 @@
 
 .mg__game-clicks,
 .mg__game-time {
-    margin-right: 15px;
-    margin-left: 5px;
+    margin-left: -10px;
+    margin-right: 10px;
     color: $color--dkgrey;
 }
 

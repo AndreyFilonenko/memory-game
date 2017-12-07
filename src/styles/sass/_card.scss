@@ -48,10 +48,7 @@
 }
   
 .mg__card--outside,
-.mg__card--inside {    
-    // display:flex;
-    // justify-content: center;
-    // align-items: center;
+.mg__card--inside {
     display: block;
     position: absolute;
     top: 0; left: 0;
@@ -67,7 +64,7 @@
 }
   
 .mg__card--inside {
-    background-color: $color--ltgrey;
+    background-color: $color--white;
     box-shadow: 0 0 0 1px $color--grey;
     transform: rotateY(-180deg);
 }
@@ -78,4 +75,13 @@
   
 .mg__card--inner.flipped .mg__card--inside {
     transform: rotateY(0);
+}
+
+.mg__card--inner.solved {    
+    cursor: default;
+    
+    .mg__card--outside,
+    .mg__card--inside {
+        transform: scale(0, 0);
+    }
 }

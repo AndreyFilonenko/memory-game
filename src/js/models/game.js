@@ -2,15 +2,18 @@
 
 import Card from "./card";
 import Timer from "./timer";
+import {shuffle} from "./../helpers/helpers";
 
 export default class Game {
-    constructor(fieldSize) {
-        this.gameField = Game.getNewGameField(fieldSize);
+    constructor(fieldSize, maxFieldSize) {
+        this.gameField = Game.getNewGameField(fieldSize, maxFieldSize);
         this.timer = new Timer();
         this.clicks = 0;
         this.startTimeoutId = null;
         this.isFirstClicked = false;
-        this.firstClicked = null;
+        this.firstClickedId = null;
+        this.state = "stop";
+        this.unresolvedCount = fieldSize / 2;
     }
 
     start() {        
@@ -18,37 +21,41 @@ export default class Game {
         // this.startTimeoutId = setTimeout("", Math.sqrt(this.gameField.length) * 1000);
         // this.flipAll();
         this.timer.start();
+        this.state = "run";
     }
 
     end() {
         this.timer.stop();
+        this.state = "stop";
     }
 
-    flipAll() {
-        for (var i = 0; i < this.gameField.length; i++) {
-            this.gameField[i].flip();
-        }
-    }
+    // flipAll() {
+    //     for (var i = 0; i < this.gameField.length; i++) {
+    //         this.gameField[i].flip();
+    //     }
+    // }
 
-    cardClickHandler(card) {
+    cardClickHandler(position) {
         this.clicks++;
+        var result = "";
         if (this.isFirstClicked === false) {
             this.isFirstClicked = true;
-            this.firstClicked = card;
-            this.gameField[card.cardPosition - 1].flip();
-        } else {            
-            this.gameField[card.cardPosition - 1].flip();
-            if (this.firstClicked.cardId === card.cardId) {
-                this.gameField[card.cardPosition - 1].found();
-                this.gameField[this.firstClicked.cardPosition - 1].found();
+            this.firstClickedId = this.gameField[position - 1].cardId;
+            result = "first";
+        } 
+        else {
+            if (this.firstClickedId === this.gameField[position - 1].cardId) {
+                result = "solved";
+                this.unresolvedCount--;
             } else {
-                setTimeout(() => {
-                    this.gameField[card.cardPosition - 1].flip();
-                    this.gameField[this.firstClicked.cardPosition - 1].flip();
-                }, 1000);
+                result = "second";
             }
             this.isFirstClicked === false;
+        }        
+        if (this.unresolvedCount <= 0) {
+            result = "end";
         }
+        return result;
     }
 
     getScore() {
@@ -57,24 +64,22 @@ export default class Game {
              - Math.floor((this.timer.getCurrentValue() * 10) / 1000);
     }
 
-    static getNewGameField(fieldSize) {
+    static getNewGameField(fieldSize, maxFieldSize) {
+        var possibleCards = new Array();
+        for (let i = 0; i < maxFieldSize / 2; ++i) {
+            possibleCards.push(new Card(i + 1));
+        }
+        possibleCards = shuffle(possibleCards);
+
         var gameField = new Array();
-        for (let i = 0; i < fieldSize / 2; i++) {
+        for (let i = 0; i < fieldSize / 2; ++i) {
             gameField.push(new Card(i + 1));
             gameField.push(new Card(i + 1));
         }
-        gameField = Game.shuffle(gameField);
+        gameField = shuffle(gameField);
         for (let i = 0; i < gameField.length; ++i) {
             gameField[i].cardPosition = i + 1;
         }
         return gameField;
-    }
-
-    static shuffle(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
     }
 }
