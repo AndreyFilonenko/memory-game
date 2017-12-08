@@ -105,14 +105,31 @@
         color: $color--white;
         background: $color--blue;
         td {
-            padding: 5px 20px; 
+            padding: 5px 27px 5px 5px;
+            &:hover {
+                background: $color--dkblue;
+            }
+            &::before {
+                padding: 0px 0px 0px 22px;
+                content: " ";
+            }
+            &.selected--plus::before  { 
+                content: "\25B2 ";
+                padding: 0px 0px 0px 0px;
+            }
+            &.selected--minus::before  {               
+                content: "\25BC ";
+                padding: 0px 0px 0px 0px;
+            } 
         }
     }
-    tbody tr:nth-child(2n) {
-        background: $color--ltblue;
-    }
+    tbody {
+        tr:nth-child(2n) {
+            background: $color--ltblue;
+        }    
 
-    tbody tr td.wide {
-        padding: 10px;
+        tr td.wide {
+            padding: 10px;
+        }
     }
 }

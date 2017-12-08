@@ -72,24 +72,24 @@ export default class GameView {
     }
 
     setMenuEvents() {
-        var start = document.querySelector("#mg__button--start");
+        let start = document.querySelector("#mg__button--start");
 
-        var sizeNodes = document.querySelectorAll("ul.mg__menu-size-select span");
+        let sizeNodes = document.querySelectorAll("ul.mg__menu-size-select span");
         for (let i = 0; i < sizeNodes.length; i++) {
             sizeNodes[i].addEventListener("click", () => {
                 for (let j = 0; j < sizeNodes.length; j++) {
                     sizeNodes[j].classList.remove("selected");
                 }
                 sizeNodes[i].classList.add("selected");
-                this.gameFieldSize = sizeNodes[i].getAttribute("data-size");
-                if (this.skinPath != null) {
+                this.gameFieldSize = Number.parseInt(sizeNodes[i].getAttribute("data-size"));
+                if (this.skinPath !== null) {
                     start.classList.remove("mg__button--disabled");
                     start.classList.add("mg__button--action");
                 }
             });
         }
 
-        var skinNodes = document.querySelectorAll("ul.mg__menu-skin-select span");
+        let skinNodes = document.querySelectorAll("ul.mg__menu-skin-select span");
         for (let i = 0; i < skinNodes.length; i++) {
             skinNodes[i].addEventListener("click", () => {
                 for (let j = 0; j < skinNodes.length; j++) {
@@ -97,7 +97,7 @@ export default class GameView {
                 }
                 skinNodes[i].classList.add("selected");
                 this.skinPath = skinNodes[i].getAttribute("data-path");
-                if (this.gameFieldSize != null) {
+                if (this.gameFieldSize !== null) {
                     start.classList.remove("mg__button--disabled");
                     start.classList.add("mg__button--action");
                 }
@@ -106,7 +106,7 @@ export default class GameView {
     }
 
     renderGame(cards) {
-        if (!cards || cards.length != this.gameFieldSize) {
+        if (!cards || cards.length !== this.gameFieldSize) {
             throw new Error("Invalid GameView renderGame args.");
         }
         this.clearGame();
@@ -125,7 +125,7 @@ export default class GameView {
             <span id=\"mg__game-time\" class=\"mg__game-time\">0</span>\
             </div>\
             <div class=\"mg__game-line-item\">\
-            <button id=\"mg__button--suspend\" class=\"mg__button mg__button--action\">Пауза</button>\
+            <button id=\"mg__button--suspend\" class=\"mg__button mg__button--disabled\">Пауза</button>\
             </div>\
             <div class=\"mg__game-line-item\">\
             <button id=\"mg__button--reset\" class=\"mg__button mg__button--cancel\">В меню</button>\
@@ -138,9 +138,9 @@ export default class GameView {
         this.gameActionContainer.className = "mg__contents mg__size-" + this.gameFieldSize;
         this.gameActionContainer.id = "mg__contents";
 
-        var path = this.skinPath;
-        for (var i = 0; i < cards.length; i++) {
-            var n = cards[i].cardId;
+        let path = this.skinPath;
+        for (let i = 0; i < cards.length; i++) {
+            let n = cards[i].cardId;
             this.gameActionContainer.innerHTML +=
                 "<div class=\"mg__card mg__card-" + (i + 1) + "\">\
                 <div class=\"mg__card--inner\" data-position=\"" + (i + 1) + "\">\
@@ -153,31 +153,43 @@ export default class GameView {
         this.gameActionWrapper.appendChild(this.gameActionContainer);
         this.gameAction.appendChild(this.gameActionWrapper);
         this.game.appendChild(this.gameAction);
+        let cardContainers = document.querySelectorAll(".mg__card");
+        for (let i = 0; i < cardContainers.length; i++) {
+            cardContainers[i].addEventListener("mousedown", (event) => {
+                event.preventDefault();
+            });
+        }
     }
 
     flipAllCards() {
-        var cardNodes = document.querySelectorAll(".mg__card--inner");
+        let cardNodes = document.querySelectorAll(".mg__card--inner");
         for (let i = 0; i < cardNodes.length; ++i) {
             cardNodes[i].classList.toggle("flipped");
         }
     }
 
+    enableSuspendButton() {
+        let suspend = document.querySelector(".mg__button--disabled");
+        suspend.classList.remove("mg__button--disabled");
+        suspend.classList.add("mg__button--action");
+    }
+
     flipBack(position) {
-        var flippedCard = document.querySelector(".mg__card-" + position + " .mg__card--inner");
+        let flippedCard = document.querySelector(".mg__card-" + position + " .mg__card--inner");
         if (flippedCard.parentNode !== null) {
             flippedCard.classList.remove("flipped");
         }
     }
 
     setValue(element, value) {
-        var counter = document.querySelector("#mg__game-" + element);
+        let counter = document.querySelector("#mg__game-" + element);
         if (counter.parentNode !== null) {
             counter.innerHTML = value;
         }
     }
 
     setSolved(position) {
-        var solvedCard = document.querySelector(".mg__card-" + position + " .mg__card--inner");
+        let solvedCard = document.querySelector(".mg__card-" + position + " .mg__card--inner");
         if (solvedCard.parentNode !== null) {
             solvedCard.classList.add("solved");
         }
@@ -194,7 +206,7 @@ export default class GameView {
             <h3 class=\"mg__win-sub-heading\">Введите свое имя для внесения записи в рекорды:</h3>\
             </div>\
             <div class=\"mg__win-line--centered\">\
-            <input type=\"text\" id=\"mg__win-input\" class=\"mg__win-input\">\
+            <input type=\"text\" id=\"mg__win-input\" class=\"mg__win-input\" autofocus>\
             <button id=\"mg__button--submit\" class=\"mg__button mg__button--disabled\">Внести</button>\
             </div>\
             <div class=\"mg__win-line--centered\">\
@@ -205,11 +217,11 @@ export default class GameView {
     }
 
     setWinScreenEvents() {
-        var input = document.querySelector("#mg__win-input");
-        var submit = document.querySelector("#mg__button--submit");
+        let input = document.querySelector("#mg__win-input");
+        let submit = document.querySelector("#mg__button--submit");
 
         input.addEventListener("input", () => {
-            if (input.value != null && input.value != "") {
+            if (input.value !== null && input.value !== "") {
                 submit.classList.remove("mg__button--disabled");
                 submit.classList.add("mg__button--action");
             } else {
@@ -219,11 +231,20 @@ export default class GameView {
         });
     }
 
-    renderScores(size, scoresBySize) {
+    renderScores(size, scoresBySize, sortKey = "name", sortDirection = "asc") {
         this.clearGame();
-        var table = "<table><thead><tr><td>Имя</td><td>Дата и время игры</td><td>Длительность</td>\
-        <td>Счет</td></thead><tbody>";
-        if (scoresBySize.length != 0) {
+        let table = 
+            "<table>\
+            <thead>\
+            <tr>\
+            <td class=\"mg__scores-table-heading\" data-tag=\"name\">Имя</td>\
+            <td class=\"mg__scores-table-heading\" data-tag=\"id\">Дата и время игры</td>\
+            <td class=\"mg__scores-table-heading\" data-tag=\"duration\">Длительность</td>\
+            <td class=\"mg__scores-table-heading\" data-tag=\"score\">Счет</td>\
+            </tr>\
+            </thead>\
+            <tbody>";
+        if (scoresBySize.length !== 0) {
             for (let i = 0; i < scoresBySize.length; i++) {
                 table +=
                     "<tr><td>" + scoresBySize[i].name + "</td>\
@@ -262,12 +283,24 @@ export default class GameView {
             "</div>\
             </div>";
         this.game.appendChild(this.gameScores);
-        let sizeButtons = document.getElementsByClassName("mg__button mg__button--action");
+        let sizeButtons = document.querySelectorAll(".mg__button--action");
         for (let i = 0; i < sizeButtons.length; ++i) {
-            if (sizeButtons[i].getAttribute("data-size") == size) {
-                sizeButtons[i].classList.add("selected");
+            if (Number.parseInt(sizeButtons[i].getAttribute("data-size")) === size) {
+                sizeButtons[i].classList.add("mg__button--selected");
             }
         }
+        let columnHeads = document.querySelectorAll(".mg__scores-table-heading");
+        for (let i = 0; i < columnHeads.length; i++) {
+            if (columnHeads[i].getAttribute("data-tag") === sortKey) {
+                if (sortDirection !== "desc") {
+                    columnHeads[i].classList.add("selected--plus");
+                } else {
+                    columnHeads[i].classList.add("selected--minus");
+                }
+            }
+            
+        }
+        
     }
 
     clearGame() {
@@ -293,41 +326,43 @@ export default class GameView {
 
     bindStartGame(handler) {
         document.querySelector("#mg__button--start").addEventListener("click", () => {
-            if (this.gameFieldSize != null && this.skinPath != null) {
+            if (this.gameFieldSize !== null && this.skinPath !== null) {
                 handler(this.gameFieldSize);
             }
         });
     }
 
     bindSuspendOrResumeGame(handler) {
-        var suspend = document.querySelector("#mg__button--suspend");
-        var cardNodes = document.querySelectorAll(".mg__card--inner");
+        let suspend = document.querySelector("#mg__button--suspend");
+        let cardNodes = document.querySelectorAll(".mg__card--inner");
         
         suspend.addEventListener("click", () => {
-            if (suspend.classList.contains("mg__button--action")) {
-                suspend.classList.remove("mg__button--action");
-                suspend.classList.add("mg__button--cancel");
-                suspend.innerHTML = "Возобновить";
-                for (let i = 0; i < cardNodes.length; ++i) {
-                    cardNodes[i].classList.toggle("paused");
+            if (!suspend.classList.contains("mg__button--disabled")) {
+                if (suspend.classList.contains("mg__button--action")) {
+                    suspend.classList.remove("mg__button--action");
+                    suspend.classList.add("mg__button--cancel");
+                    suspend.innerHTML = "Возобновить";
+                    for (let i = 0; i < cardNodes.length; ++i) {
+                        cardNodes[i].classList.toggle("paused");
+                    }
+                } else if (suspend.classList.contains("mg__button--cancel")) {
+                    suspend.classList.remove("mg__button--cancel");
+                    suspend.classList.add("mg__button--action");
+                    suspend.innerHTML = "Пауза";
+                    for (let i = 0; i < cardNodes.length; ++i) {
+                        cardNodes[i].classList.toggle("paused");
+                    }
                 }
-            } else if (suspend.classList.contains("mg__button--cancel")) {
-                suspend.classList.remove("mg__button--cancel");
-                suspend.classList.add("mg__button--action");
-                suspend.innerHTML = "Пауза";
-                for (let i = 0; i < cardNodes.length; ++i) {
-                    cardNodes[i].classList.toggle("paused");
-                }
+                handler();
             }
-            handler();
         });
     }
 
     bindCardClickHandler(handler) {
-        var cards = document.querySelectorAll(".mg__card--inner");
+        let cards = document.querySelectorAll(".mg__card--inner");
         for (let i = 0; i < cards.length; i++) {
             cards[i].addEventListener("click", () => {
-                if (!cards[i].classList.contains("flipped") 
+                if (!cards[i].classList.contains("flipped")
                     && !cards[i].classList.contains("solved")
                     && !cards[i].classList.contains("paused")) {
                     cards[i].classList.add("flipped");
@@ -344,7 +379,7 @@ export default class GameView {
     }
 
     bindShowScoresBySize(handler) {
-        var sizeButtons = document.getElementsByClassName("mg__button mg__button--action");
+        let sizeButtons = document.querySelectorAll(".mg__button--action");
         for (let i = 0; i < sizeButtons.length; i++) {
             sizeButtons[i].addEventListener("click", () => {
                 handler(Number.parseInt(sizeButtons[i].getAttribute("data-size")));
@@ -352,10 +387,27 @@ export default class GameView {
         }
     }
 
+    bindShowSortedScores(handler) {
+        let colHeads = document.querySelectorAll(".mg__scores-table-heading");
+        let activeSizeButton = document.querySelector(".mg__button--selected");
+        let direction;
+        for (let i = 0; i < colHeads.length; i++) {
+            colHeads[i].addEventListener("click", () => {
+                if (colHeads[i].classList.contains("selected--minus")) {
+                    direction = "asc";
+                } else {
+                    direction = "desc";
+                }
+                handler(Number.parseInt(activeSizeButton.getAttribute("data-size")),
+                    colHeads[i].getAttribute("data-tag"), direction);
+            });
+        }
+    }
+
     bindSaveScore(handler) {
-        var input = document.querySelector("#mg__win-input");
+        let input = document.querySelector("#mg__win-input");
         document.querySelector("#mg__button--submit").addEventListener("click", () => {
-            if (input.value != null && input.value != "") {
+            if (input.value !== null && input.value !== "") {
                 handler(input.value);
             }
         });

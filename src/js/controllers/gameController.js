@@ -3,6 +3,7 @@
 import Game from "./../models/game";
 import GameView from "./../views/gameView";
 import ScoresRepository from "./../infrastructure/scoresRepository";
+import Helpers from "./../helpers/helpers";
 
 export default class GameController {
     constructor(view, repo) {
@@ -39,6 +40,7 @@ export default class GameController {
             this.intervalId = window.setInterval(() => {
                 this.refreshTime();
             }, 50);
+            this.view.enableSuspendButton();
         }, (fieldSize / 8) * 1000);
         this.view.bindShowMenu(this.showMenu.bind(this));
         this.view.bindCardClickHandler(this.cardClickHandler.bind(this));
@@ -46,7 +48,7 @@ export default class GameController {
     }
 
     cardClickHandler(position) {
-        var result = this.game.cardClickHandler(position);
+        let result = this.game.cardClickHandler(position);
         window.setTimeout(() => {
             switch (result) {
                 case "first":
@@ -88,20 +90,20 @@ export default class GameController {
     }
 
     refreshTime() {
-        if (this.game.state == "run") {
+        if (this.game.state === "run") {
             this.view.setValue("time", this.game.timer.getCurrentValue());
         }
     }
 
     refreshClicks() {
-        if (this.game.state == "run") {
+        if (this.game.state === "run") {
             this.view.setValue("clicks", this.game.clicks);
         }
     }
 
     showWinScreen() {
-        var duration = this.game.timer.getCurrentValue();
-        var score = this.game.getScore();
+        let duration = this.game.timer.getCurrentValue();
+        let score = this.game.getScore();
         this.view.renderWinScreen(duration, score);
         this.view.bindShowMenu(this.showMenu.bind(this));
         this.view.bindSaveScore(this.saveScore.bind(this));
@@ -115,18 +117,20 @@ export default class GameController {
             duration: this.game.timer.getCurrentValue(),
             score: this.game.getScore()
         });
-        this.showMenu();
+        this.showScores(this.game.gameField.length);
     }
 
-    showScores(fieldSize = 16) {
-        var scoresBySize = this.repo.getAllBySize(fieldSize);
-        this.view.renderScores(fieldSize, scoresBySize);
+    showScores(fieldSize = 16, sortKey = "name", direction = "asc") {
+        const scoresBySize = this.repo.getAllBySize(fieldSize);
+        const sortedScores = scoresBySize.slice(0).sort(Helpers.compareBy(sortKey, direction));
+        this.view.renderScores(fieldSize, sortedScores, sortKey, direction);
         this.view.bindShowMenu(this.showMenu.bind(this));
         this.view.bindShowScoresBySize(this.showScores.bind(this));
+        this.view.bindShowSortedScores(this.showScores.bind(this));
     }
 
     setFakeRepoData() {
-        var fake = new Array();
+        let fake = new Array();
         for (let i = 0; i < 10; i++) {
             fake.push({
                 id: Date.now(),

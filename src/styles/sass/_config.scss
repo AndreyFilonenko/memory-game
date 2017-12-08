@@ -11,6 +11,7 @@ $color--xltgrey : rgb(220, 220, 220);
 
 $color--blue : rgb(40,170,220);
 $color--ltblue : lighten($color--blue, 30%);
+$color--dkblue : darken($color--blue, 30%);
 
 $color--red : rgb(255,60,80);
 $color--dkred : darken($color--red, 20%);

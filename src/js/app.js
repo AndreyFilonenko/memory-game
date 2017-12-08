@@ -7,11 +7,11 @@ import styles from "./../styles/sass/app.scss";
 
 console.log(styles.container);
 
-var view = new GameView();
+const view = new GameView();
 
-var repo = new ScoresRepository("pairs-memory-game");
+const repo = new ScoresRepository("pairs-memory-game");
 
-var controller = new GameController(view, repo);
+const controller = new GameController(view, repo);
 controller.setMaxField(64);
 //controller.setFakeRepoData();
 

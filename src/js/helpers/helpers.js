@@ -1,31 +1,31 @@
 export default class Helpers {
 
     static getFormattedDateTime(timeSpan) {
-        var dt = new Date(timeSpan);
+        let dt = new Date(timeSpan);
 
-        var dd = dt.getDate();
+        let dd = dt.getDate();
         if (dd < 10) { dd = "0" + dd; }
 
-        var mm = dt.getMonth() + 1;
+        let mm = dt.getMonth() + 1;
         if (mm < 10) { mm = "0" + mm; }
 
-        var yy = dt.getFullYear();
+        let yy = dt.getFullYear();
         if (yy < 10) { yy = "0" + yy; }
 
-        var hh = dt.getHours();
+        let hh = dt.getHours();
         if (hh < 10) { hh = "0" + hh; }
 
-        var min = dt.getMinutes();
+        let min = dt.getMinutes();
         if (min < 10) { min = "0" + min; }
 
-        var ss = dt.getSeconds();
+        let ss = dt.getSeconds();
         if (ss < 10) { ss = "0" + ss; }
 
         return dd + "." + mm + "." + yy + " - " + hh + ":" + min + ":" + ss;
     }
 
     static getFormattedTime(seconds) {
-        var retStr = "";
+        let retStr = "";
         if (seconds < 60) {
             retStr = seconds + " сек.";
         } else if (seconds < 3600) {
@@ -45,5 +45,28 @@ export default class Helpers {
             [array[i], array[j]] = [array[j], array[i]];
         }
         return array;
+    }
+
+    static compareBy(key, order = "asc") {
+        return function (a, b) {
+            if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+                return 0;
+            }
+
+            const varA = (typeof a[key] === "string") ?
+                a[key].toUpperCase() : a[key];
+            const varB = (typeof b[key] === "string") ?
+                b[key].toUpperCase() : b[key];
+
+            let comparison = 0;
+            if (varA > varB) {
+                comparison = 1;
+            } else if (varA < varB) {
+                comparison = -1;
+            }
+            return (
+                (order === "desc") ? (comparison * -1) : comparison
+            );
+        };
     }
 }

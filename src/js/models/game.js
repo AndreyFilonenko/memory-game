@@ -22,10 +22,10 @@ export default class Game {
     }
 
     suspendOrResume() {
-        if (this.state == "run") {
+        if (this.state === "run") {
             this.timer.stop();
             this.state = "suspended";
-        } else if (this.state == "suspended") {
+        } else if (this.state === "suspended") {
             this.timer.start();
             this.state = "run";
         }
@@ -38,7 +38,7 @@ export default class Game {
 
     cardClickHandler(position) {
         this.clicks++;
-        var result = "";
+        let result = "";
         if (this.isFirstClicked === false) {
             this.isFirstClicked = true;
             this.firstClickedId = this.gameField[position - 1].cardId;
@@ -67,13 +67,13 @@ export default class Game {
     }
 
     static getNewGameField(fieldSize, maxFieldSize) {
-        var possibleCards = new Array();
+        let possibleCards = new Array();
         for (let i = 0; i < maxFieldSize / 2; ++i) {
             possibleCards.push(new Card(i + 1));
         }
-        possibleCards = Helpers.shuffle(possibleCards);
+        Helpers.shuffle(possibleCards);
 
-        var gameField = new Array();
+        let gameField = new Array();
         for (let i = 0; i < fieldSize / 2; ++i) {
             gameField.push(possibleCards[i]);
             gameField.push(possibleCards[i]);
