@@ -105,21 +105,21 @@
         color: $color--white;
         background: $color--blue;
         td {
-            padding: 5px 27px 5px 5px;
+            padding: 5px 5px 5px 20px;
             &:hover {
                 background: $color--dkblue;
             }
-            &::before {
-                padding: 0px 0px 0px 22px;
+            &::after {
+                padding: 0px 0px 0px 18px;
                 content: " ";
             }
-            &.selected--plus::before  { 
-                content: "\25B2 ";
-                padding: 0px 0px 0px 0px;
+            &.selected--plus::after  { 
+                content: $char--up-arrow;
+                padding: 0px;
             }
-            &.selected--minus::before  {               
-                content: "\25BC ";
-                padding: 0px 0px 0px 0px;
+            &.selected--minus::after  {               
+                content: $char--down-arrow;
+                padding: 0px;
             } 
         }
     }

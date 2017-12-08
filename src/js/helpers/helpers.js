@@ -1,3 +1,5 @@
+"use strict"
+
 export default class Helpers {
 
     static getFormattedDateTime(timeSpan) {
