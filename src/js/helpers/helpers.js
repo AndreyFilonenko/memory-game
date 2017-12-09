@@ -12,7 +12,6 @@ export default class Helpers {
         if (mm < 10) { mm = "0" + mm; }
 
         let yy = dt.getFullYear();
-        if (yy < 10) { yy = "0" + yy; }
 
         let hh = dt.getHours();
         if (hh < 10) { hh = "0" + hh; }

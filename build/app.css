@@ -1,2 +1,709 @@
-.mg{margin-left:auto;margin-right:auto}.mg__game,.mg__menu,.mg__scores,.mg__win{background-color:#fff}.mg__game-line--centered,.mg__menu-line--centered,.mg__scores-line--centered,.mg__win-line--centered{text-align:center;padding:10px}.mg__menu-line-item{display:inline-block;vertical-align:top}.mg__game-line-item,.mg__scores-line-item{display:inline-block;vertical-align:center;padding:5px}.mg__menu-heading,.mg__scores-heading,.mg__win-heading{margin-bottom:10px;color:#282828;font-size:24px}.mg__menu-sub-heading,.mg__win-sub-heading{font-size:18px;margin-top:0;margin-bottom:10px;color:#28aadc}.mg__menu-sub-heading:after,.mg__menu-sub-heading:before,.mg__win-sub-heading:after,.mg__win-sub-heading:before{margin:0 5px;content:"-"}.mg__menu-text,.mg__win-text{margin-bottom:5px}.mg__menu-size-select,.mg__menu-skin-select{list-style:none;margin:0;padding:0}.mg__menu-size-select span,.mg__menu-skin-select span{color:#ff3c50;font-size:18px;cursor:pointer}.mg__menu-size-select span.selected,.mg__menu-skin-select span.selected{color:#6f000b}.mg__menu-size-select span:hover,.mg__menu-skin-select span:hover{color:#d50016}.mg__game-clicks,.mg__game-time{margin-left:-10px;margin-right:10px;color:#282828}.mg__game-time:after{margin:0 5px;content:"c."}.mg__win-input{border:2px solid #28c850;border-radius:3px;padding:3px;font-family:Roboto Slab,sans-serif;font-size:14px}.mg__scores-table table{border-collapse:collapse;border-left:3px solid #28aadc;border-right:3px solid #28aadc;border-bottom:3px solid #28aadc;margin-left:auto;margin-right:auto}.mg__scores-table table thead{color:#fff;background:#28aadc}.mg__scores-table table thead td{padding:5px 5px 5px 20px}.mg__scores-table table thead td:hover{background:#0f475c}.mg__scores-table table thead td:after{padding:0 0 0 18px;content:" "}.mg__scores-table table thead td.selected--plus:after{content:"\25B2";padding:0}.mg__scores-table table thead td.selected--minus:after{content:"\25BC";padding:0}.mg__scores-table table tbody tr:nth-child(2n){background:#acdef1}.mg__scores-table table tbody tr td.wide{padding:10px}.mg__wrapper{margin:0 auto;max-width:55%}.mg__contents{position:relative;max-width:100%;padding-top:100%;margin-left:-5px;margin-right:-5px}.mg__card{position:absolute;padding:5px}.mg__size-16 .mg__card{width:25%;height:25%}.mg__size-16 .mg__card-1{top:0;left:0}.mg__size-16 .mg__card-2{top:0;left:25%}.mg__size-16 .mg__card-3{top:0;left:50%}.mg__size-16 .mg__card-4{top:0;left:75%}.mg__size-16 .mg__card-5{top:25%;left:0}.mg__size-16 .mg__card-6{top:25%;left:25%}.mg__size-16 .mg__card-7{top:25%;left:50%}.mg__size-16 .mg__card-8{top:25%;left:75%}.mg__size-16 .mg__card-9{top:50%;left:0}.mg__size-16 .mg__card-10{top:50%;left:25%}.mg__size-16 .mg__card-11{top:50%;left:50%}.mg__size-16 .mg__card-12{top:50%;left:75%}.mg__size-16 .mg__card-13{top:75%;left:0}.mg__size-16 .mg__card-14{top:75%;left:25%}.mg__size-16 .mg__card-15{top:75%;left:50%}.mg__size-16 .mg__card-16{top:75%;left:75%}.mg__size-36 .mg__card{width:16.66667%;height:16.66667%}.mg__size-36 .mg__card-1{top:0;left:0}.mg__size-36 .mg__card-2{top:0;left:16.66667%}.mg__size-36 .mg__card-3{top:0;left:33.33333%}.mg__size-36 .mg__card-4{top:0;left:50%}.mg__size-36 .mg__card-5{top:0;left:66.66667%}.mg__size-36 .mg__card-6{top:0;left:83.33333%}.mg__size-36 .mg__card-7{top:16.66667%;left:0}.mg__size-36 .mg__card-8{top:16.66667%;left:16.66667%}.mg__size-36 .mg__card-9{top:16.66667%;left:33.33333%}.mg__size-36 .mg__card-10{top:16.66667%;left:50%}.mg__size-36 .mg__card-11{top:16.66667%;left:66.66667%}.mg__size-36 .mg__card-12{top:16.66667%;left:83.33333%}.mg__size-36 .mg__card-13{top:33.33333%;left:0}.mg__size-36 .mg__card-14{top:33.33333%;left:16.66667%}.mg__size-36 .mg__card-15{top:33.33333%;left:33.33333%}.mg__size-36 .mg__card-16{top:33.33333%;left:50%}.mg__size-36 .mg__card-17{top:33.33333%;left:66.66667%}.mg__size-36 .mg__card-18{top:33.33333%;left:83.33333%}.mg__size-36 .mg__card-19{top:50%;left:0}.mg__size-36 .mg__card-20{top:50%;left:16.66667%}.mg__size-36 .mg__card-21{top:50%;left:33.33333%}.mg__size-36 .mg__card-22{top:50%;left:50%}.mg__size-36 .mg__card-23{top:50%;left:66.66667%}.mg__size-36 .mg__card-24{top:50%;left:83.33333%}.mg__size-36 .mg__card-25{top:66.66667%;left:0}.mg__size-36 .mg__card-26{top:66.66667%;left:16.66667%}.mg__size-36 .mg__card-27{top:66.66667%;left:33.33333%}.mg__size-36 .mg__card-28{top:66.66667%;left:50%}.mg__size-36 .mg__card-29{top:66.66667%;left:66.66667%}.mg__size-36 .mg__card-30{top:66.66667%;left:83.33333%}.mg__size-36 .mg__card-31{top:83.33333%;left:0}.mg__size-36 .mg__card-32{top:83.33333%;left:16.66667%}.mg__size-36 .mg__card-33{top:83.33333%;left:33.33333%}.mg__size-36 .mg__card-34{top:83.33333%;left:50%}.mg__size-36 .mg__card-35{top:83.33333%;left:66.66667%}.mg__size-36 .mg__card-36{top:83.33333%;left:83.33333%}.mg__size-64 .mg__card{width:12.5%;height:12.5%}.mg__size-64 .mg__card-1{top:0;left:0}.mg__size-64 .mg__card-2{top:0;left:12.5%}.mg__size-64 .mg__card-3{top:0;left:25%}.mg__size-64 .mg__card-4{top:0;left:37.5%}.mg__size-64 .mg__card-5{top:0;left:50%}.mg__size-64 .mg__card-6{top:0;left:62.5%}.mg__size-64 .mg__card-7{top:0;left:75%}.mg__size-64 .mg__card-8{top:0;left:87.5%}.mg__size-64 .mg__card-9{top:12.5%;left:0}.mg__size-64 .mg__card-10{top:12.5%;left:12.5%}.mg__size-64 .mg__card-11{top:12.5%;left:25%}.mg__size-64 .mg__card-12{top:12.5%;left:37.5%}.mg__size-64 .mg__card-13{top:12.5%;left:50%}.mg__size-64 .mg__card-14{top:12.5%;left:62.5%}.mg__size-64 .mg__card-15{top:12.5%;left:75%}.mg__size-64 .mg__card-16{top:12.5%;left:87.5%}.mg__size-64 .mg__card-17{top:25%;left:0}.mg__size-64 .mg__card-18{top:25%;left:12.5%}.mg__size-64 .mg__card-19{top:25%;left:25%}.mg__size-64 .mg__card-20{top:25%;left:37.5%}.mg__size-64 .mg__card-21{top:25%;left:50%}.mg__size-64 .mg__card-22{top:25%;left:62.5%}.mg__size-64 .mg__card-23{top:25%;left:75%}.mg__size-64 .mg__card-24{top:25%;left:87.5%}.mg__size-64 .mg__card-25{top:37.5%;left:0}.mg__size-64 .mg__card-26{top:37.5%;left:12.5%}.mg__size-64 .mg__card-27{top:37.5%;left:25%}.mg__size-64 .mg__card-28{top:37.5%;left:37.5%}.mg__size-64 .mg__card-29{top:37.5%;left:50%}.mg__size-64 .mg__card-30{top:37.5%;left:62.5%}.mg__size-64 .mg__card-31{top:37.5%;left:75%}.mg__size-64 .mg__card-32{top:37.5%;left:87.5%}.mg__size-64 .mg__card-33{top:50%;left:0}.mg__size-64 .mg__card-34{top:50%;left:12.5%}.mg__size-64 .mg__card-35{top:50%;left:25%}.mg__size-64 .mg__card-36{top:50%;left:37.5%}.mg__size-64 .mg__card-37{top:50%;left:50%}.mg__size-64 .mg__card-38{top:50%;left:62.5%}.mg__size-64 .mg__card-39{top:50%;left:75%}.mg__size-64 .mg__card-40{top:50%;left:87.5%}.mg__size-64 .mg__card-41{top:62.5%;left:0}.mg__size-64 .mg__card-42{top:62.5%;left:12.5%}.mg__size-64 .mg__card-43{top:62.5%;left:25%}.mg__size-64 .mg__card-44{top:62.5%;left:37.5%}.mg__size-64 .mg__card-45{top:62.5%;left:50%}.mg__size-64 .mg__card-46{top:62.5%;left:62.5%}.mg__size-64 .mg__card-47{top:62.5%;left:75%}.mg__size-64 .mg__card-48{top:62.5%;left:87.5%}.mg__size-64 .mg__card-49{top:75%;left:0}.mg__size-64 .mg__card-50{top:75%;left:12.5%}.mg__size-64 .mg__card-51{top:75%;left:25%}.mg__size-64 .mg__card-52{top:75%;left:37.5%}.mg__size-64 .mg__card-53{top:75%;left:50%}.mg__size-64 .mg__card-54{top:75%;left:62.5%}.mg__size-64 .mg__card-55{top:75%;left:75%}.mg__size-64 .mg__card-56{top:75%;left:87.5%}.mg__size-64 .mg__card-57{top:87.5%;left:0}.mg__size-64 .mg__card-58{top:87.5%;left:12.5%}.mg__size-64 .mg__card-59{top:87.5%;left:25%}.mg__size-64 .mg__card-60{top:87.5%;left:37.5%}.mg__size-64 .mg__card-61{top:87.5%;left:50%}.mg__size-64 .mg__card-62{top:87.5%;left:62.5%}.mg__size-64 .mg__card-63{top:87.5%;left:75%}.mg__size-64 .mg__card-64{top:87.5%;left:87.5%}.mg__card--inner{position:relative;width:100%;height:100%;cursor:pointer}.mg__card--inside,.mg__card--outside{display:block;position:absolute;top:0;left:0;width:90%;height:90%;backface-visibility:hidden;transition:transform .5s,background .5s}.mg__card--outside{background-color:#b4b4b4;box-shadow:0 0 0 1px #787878}.mg__card--inside{background-color:#fff;box-shadow:0 0 0 1px #787878}.mg__card--inner.flipped .mg__card--outside,.mg__card--inside{transform:rotateY(-180deg)}.mg__card--inner.flipped .mg__card--inside{transform:rotateY(0)}.mg__card--inner.solved{cursor:default}.mg__card--inner.solved .mg__card--inside,.mg__card--inner.solved .mg__card--outside{opacity:0;transition-property:opacity;transition-duration:1s}.mg__button{margin:0;padding:5px;font-family:Roboto Slab,sans-serif;font-size:14px;border:none;border-radius:3px;box-shadow:none;cursor:pointer}.mg__button.mg__button--selected{border:3px solid #e6e61e}.mg__button--action{color:#fff;background:#28c850;border:3px solid #28c850}.mg__button--info{color:#fff;background:#28aadc;border:3px solid #28aadc}.mg__button--cancel{color:#fff;background:#ff3c50;border:3px solid #ff3c50}.mg__button--disabled{color:#fff;background:#b4b4b4;border:3px solid #b4b4b4}body,html{height:100%}body{color:#787878;background-color:#28aadc;font-family:Roboto Slab,sans-serif;font-size:18px}img{display:block;max-width:100%;height:auto}.container{max-width:1024px;min-width:480px;margin:auto}
-/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXBwLmNzcyIsInNvdXJjZXMiOltdLCJtYXBwaW5ncyI6IiIsInNvdXJjZVJvb3QiOiIifQ==*/
+@charset "UTF-8";
+.mg {
+  margin-left: auto;
+  margin-right: auto; }
+
+.mg__menu,
+.mg__game,
+.mg__win,
+.mg__scores {
+  background-color: white; }
+
+.mg__menu-line--centered,
+.mg__game-line--centered,
+.mg__win-line--centered,
+.mg__scores-line--centered {
+  text-align: center;
+  padding: 10px; }
+
+.mg__menu-line-item {
+  display: inline-block;
+  vertical-align: top; }
+
+.mg__game-line-item,
+.mg__scores-line-item {
+  display: inline-block;
+  vertical-align: center;
+  padding: 5px; }
+
+.mg__menu-heading,
+.mg__win-heading,
+.mg__scores-heading {
+  margin-bottom: 10px;
+  color: #282828;
+  font-size: 24px; }
+
+.mg__menu-sub-heading,
+.mg__win-sub-heading {
+  font-size: 18px;
+  margin-top: 0px;
+  margin-bottom: 10px;
+  color: #28aadc; }
+  .mg__menu-sub-heading::before, .mg__menu-sub-heading::after,
+  .mg__win-sub-heading::before,
+  .mg__win-sub-heading::after {
+    margin: 0 5px;
+    content: "-"; }
+
+.mg__menu-text,
+.mg__win-text {
+  margin-bottom: 5px; }
+
+.mg__menu-size-select,
+.mg__menu-skin-select {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+  .mg__menu-size-select span,
+  .mg__menu-skin-select span {
+    color: #ff3c50;
+    font-size: 18px;
+    cursor: pointer; }
+    .mg__menu-size-select span.selected,
+    .mg__menu-skin-select span.selected {
+      color: #6f000b; }
+    .mg__menu-size-select span:hover,
+    .mg__menu-skin-select span:hover {
+      color: #d50016; }
+
+.mg__game-clicks,
+.mg__game-time {
+  margin-left: -10px;
+  margin-right: 10px;
+  color: #282828; }
+
+.mg__game-time::after {
+  margin: 0 5px;
+  content: "c."; }
+
+.mg__win-input {
+  border: 2px solid #28c850;
+  border-radius: 3px;
+  padding: 3px;
+  font-family: "Roboto Slab", sans-serif;
+  font-size: 14px; }
+
+.mg__scores-table table {
+  border-collapse: collapse;
+  border-left: 3px solid #28aadc;
+  border-right: 3px solid #28aadc;
+  border-bottom: 3px solid #28aadc;
+  margin-left: auto;
+  margin-right: auto; }
+  .mg__scores-table table thead {
+    color: white;
+    background: #28aadc; }
+    .mg__scores-table table thead td {
+      padding: 5px 5px 5px 20px; }
+      .mg__scores-table table thead td:hover {
+        background: #0f475c; }
+      .mg__scores-table table thead td::after {
+        padding: 0px 0px 0px 18px;
+        content: " "; }
+      .mg__scores-table table thead td.selected--plus::after {
+        content: "\25B2";
+        padding: 0px; }
+      .mg__scores-table table thead td.selected--minus::after {
+        content: "\25BC";
+        padding: 0px; }
+  .mg__scores-table table tbody tr:nth-child(2n) {
+    background: #acdef1; }
+  .mg__scores-table table tbody tr td.wide {
+    padding: 10px; }
+
+.mg__wrapper {
+  margin: 0 auto;
+  max-width: 55%; }
+
+.mg__contents {
+  position: relative;
+  max-width: 100%;
+  padding-top: 100%;
+  margin-left: -5px;
+  margin-right: -5px; }
+
+.mg__card {
+  position: absolute;
+  padding: 5px; }
+
+.mg__size-16 .mg__card {
+  width: 25%;
+  height: 25%; }
+
+.mg__size-16 .mg__card-1 {
+  top: 0%;
+  left: 0%; }
+
+.mg__size-16 .mg__card-2 {
+  top: 0%;
+  left: 25%; }
+
+.mg__size-16 .mg__card-3 {
+  top: 0%;
+  left: 50%; }
+
+.mg__size-16 .mg__card-4 {
+  top: 0%;
+  left: 75%; }
+
+.mg__size-16 .mg__card-5 {
+  top: 25%;
+  left: 0%; }
+
+.mg__size-16 .mg__card-6 {
+  top: 25%;
+  left: 25%; }
+
+.mg__size-16 .mg__card-7 {
+  top: 25%;
+  left: 50%; }
+
+.mg__size-16 .mg__card-8 {
+  top: 25%;
+  left: 75%; }
+
+.mg__size-16 .mg__card-9 {
+  top: 50%;
+  left: 0%; }
+
+.mg__size-16 .mg__card-10 {
+  top: 50%;
+  left: 25%; }
+
+.mg__size-16 .mg__card-11 {
+  top: 50%;
+  left: 50%; }
+
+.mg__size-16 .mg__card-12 {
+  top: 50%;
+  left: 75%; }
+
+.mg__size-16 .mg__card-13 {
+  top: 75%;
+  left: 0%; }
+
+.mg__size-16 .mg__card-14 {
+  top: 75%;
+  left: 25%; }
+
+.mg__size-16 .mg__card-15 {
+  top: 75%;
+  left: 50%; }
+
+.mg__size-16 .mg__card-16 {
+  top: 75%;
+  left: 75%; }
+
+.mg__size-36 .mg__card {
+  width: 16.66667%;
+  height: 16.66667%; }
+
+.mg__size-36 .mg__card-1 {
+  top: 0%;
+  left: 0%; }
+
+.mg__size-36 .mg__card-2 {
+  top: 0%;
+  left: 16.66667%; }
+
+.mg__size-36 .mg__card-3 {
+  top: 0%;
+  left: 33.33333%; }
+
+.mg__size-36 .mg__card-4 {
+  top: 0%;
+  left: 50%; }
+
+.mg__size-36 .mg__card-5 {
+  top: 0%;
+  left: 66.66667%; }
+
+.mg__size-36 .mg__card-6 {
+  top: 0%;
+  left: 83.33333%; }
+
+.mg__size-36 .mg__card-7 {
+  top: 16.66667%;
+  left: 0%; }
+
+.mg__size-36 .mg__card-8 {
+  top: 16.66667%;
+  left: 16.66667%; }
+
+.mg__size-36 .mg__card-9 {
+  top: 16.66667%;
+  left: 33.33333%; }
+
+.mg__size-36 .mg__card-10 {
+  top: 16.66667%;
+  left: 50%; }
+
+.mg__size-36 .mg__card-11 {
+  top: 16.66667%;
+  left: 66.66667%; }
+
+.mg__size-36 .mg__card-12 {
+  top: 16.66667%;
+  left: 83.33333%; }
+
+.mg__size-36 .mg__card-13 {
+  top: 33.33333%;
+  left: 0%; }
+
+.mg__size-36 .mg__card-14 {
+  top: 33.33333%;
+  left: 16.66667%; }
+
+.mg__size-36 .mg__card-15 {
+  top: 33.33333%;
+  left: 33.33333%; }
+
+.mg__size-36 .mg__card-16 {
+  top: 33.33333%;
+  left: 50%; }
+
+.mg__size-36 .mg__card-17 {
+  top: 33.33333%;
+  left: 66.66667%; }
+
+.mg__size-36 .mg__card-18 {
+  top: 33.33333%;
+  left: 83.33333%; }
+
+.mg__size-36 .mg__card-19 {
+  top: 50%;
+  left: 0%; }
+
+.mg__size-36 .mg__card-20 {
+  top: 50%;
+  left: 16.66667%; }
+
+.mg__size-36 .mg__card-21 {
+  top: 50%;
+  left: 33.33333%; }
+
+.mg__size-36 .mg__card-22 {
+  top: 50%;
+  left: 50%; }
+
+.mg__size-36 .mg__card-23 {
+  top: 50%;
+  left: 66.66667%; }
+
+.mg__size-36 .mg__card-24 {
+  top: 50%;
+  left: 83.33333%; }
+
+.mg__size-36 .mg__card-25 {
+  top: 66.66667%;
+  left: 0%; }
+
+.mg__size-36 .mg__card-26 {
+  top: 66.66667%;
+  left: 16.66667%; }
+
+.mg__size-36 .mg__card-27 {
+  top: 66.66667%;
+  left: 33.33333%; }
+
+.mg__size-36 .mg__card-28 {
+  top: 66.66667%;
+  left: 50%; }
+
+.mg__size-36 .mg__card-29 {
+  top: 66.66667%;
+  left: 66.66667%; }
+
+.mg__size-36 .mg__card-30 {
+  top: 66.66667%;
+  left: 83.33333%; }
+
+.mg__size-36 .mg__card-31 {
+  top: 83.33333%;
+  left: 0%; }
+
+.mg__size-36 .mg__card-32 {
+  top: 83.33333%;
+  left: 16.66667%; }
+
+.mg__size-36 .mg__card-33 {
+  top: 83.33333%;
+  left: 33.33333%; }
+
+.mg__size-36 .mg__card-34 {
+  top: 83.33333%;
+  left: 50%; }
+
+.mg__size-36 .mg__card-35 {
+  top: 83.33333%;
+  left: 66.66667%; }
+
+.mg__size-36 .mg__card-36 {
+  top: 83.33333%;
+  left: 83.33333%; }
+
+.mg__size-64 .mg__card {
+  width: 12.5%;
+  height: 12.5%; }
+
+.mg__size-64 .mg__card-1 {
+  top: 0%;
+  left: 0%; }
+
+.mg__size-64 .mg__card-2 {
+  top: 0%;
+  left: 12.5%; }
+
+.mg__size-64 .mg__card-3 {
+  top: 0%;
+  left: 25%; }
+
+.mg__size-64 .mg__card-4 {
+  top: 0%;
+  left: 37.5%; }
+
+.mg__size-64 .mg__card-5 {
+  top: 0%;
+  left: 50%; }
+
+.mg__size-64 .mg__card-6 {
+  top: 0%;
+  left: 62.5%; }
+
+.mg__size-64 .mg__card-7 {
+  top: 0%;
+  left: 75%; }
+
+.mg__size-64 .mg__card-8 {
+  top: 0%;
+  left: 87.5%; }
+
+.mg__size-64 .mg__card-9 {
+  top: 12.5%;
+  left: 0%; }
+
+.mg__size-64 .mg__card-10 {
+  top: 12.5%;
+  left: 12.5%; }
+
+.mg__size-64 .mg__card-11 {
+  top: 12.5%;
+  left: 25%; }
+
+.mg__size-64 .mg__card-12 {
+  top: 12.5%;
+  left: 37.5%; }
+
+.mg__size-64 .mg__card-13 {
+  top: 12.5%;
+  left: 50%; }
+
+.mg__size-64 .mg__card-14 {
+  top: 12.5%;
+  left: 62.5%; }
+
+.mg__size-64 .mg__card-15 {
+  top: 12.5%;
+  left: 75%; }
+
+.mg__size-64 .mg__card-16 {
+  top: 12.5%;
+  left: 87.5%; }
+
+.mg__size-64 .mg__card-17 {
+  top: 25%;
+  left: 0%; }
+
+.mg__size-64 .mg__card-18 {
+  top: 25%;
+  left: 12.5%; }
+
+.mg__size-64 .mg__card-19 {
+  top: 25%;
+  left: 25%; }
+
+.mg__size-64 .mg__card-20 {
+  top: 25%;
+  left: 37.5%; }
+
+.mg__size-64 .mg__card-21 {
+  top: 25%;
+  left: 50%; }
+
+.mg__size-64 .mg__card-22 {
+  top: 25%;
+  left: 62.5%; }
+
+.mg__size-64 .mg__card-23 {
+  top: 25%;
+  left: 75%; }
+
+.mg__size-64 .mg__card-24 {
+  top: 25%;
+  left: 87.5%; }
+
+.mg__size-64 .mg__card-25 {
+  top: 37.5%;
+  left: 0%; }
+
+.mg__size-64 .mg__card-26 {
+  top: 37.5%;
+  left: 12.5%; }
+
+.mg__size-64 .mg__card-27 {
+  top: 37.5%;
+  left: 25%; }
+
+.mg__size-64 .mg__card-28 {
+  top: 37.5%;
+  left: 37.5%; }
+
+.mg__size-64 .mg__card-29 {
+  top: 37.5%;
+  left: 50%; }
+
+.mg__size-64 .mg__card-30 {
+  top: 37.5%;
+  left: 62.5%; }
+
+.mg__size-64 .mg__card-31 {
+  top: 37.5%;
+  left: 75%; }
+
+.mg__size-64 .mg__card-32 {
+  top: 37.5%;
+  left: 87.5%; }
+
+.mg__size-64 .mg__card-33 {
+  top: 50%;
+  left: 0%; }
+
+.mg__size-64 .mg__card-34 {
+  top: 50%;
+  left: 12.5%; }
+
+.mg__size-64 .mg__card-35 {
+  top: 50%;
+  left: 25%; }
+
+.mg__size-64 .mg__card-36 {
+  top: 50%;
+  left: 37.5%; }
+
+.mg__size-64 .mg__card-37 {
+  top: 50%;
+  left: 50%; }
+
+.mg__size-64 .mg__card-38 {
+  top: 50%;
+  left: 62.5%; }
+
+.mg__size-64 .mg__card-39 {
+  top: 50%;
+  left: 75%; }
+
+.mg__size-64 .mg__card-40 {
+  top: 50%;
+  left: 87.5%; }
+
+.mg__size-64 .mg__card-41 {
+  top: 62.5%;
+  left: 0%; }
+
+.mg__size-64 .mg__card-42 {
+  top: 62.5%;
+  left: 12.5%; }
+
+.mg__size-64 .mg__card-43 {
+  top: 62.5%;
+  left: 25%; }
+
+.mg__size-64 .mg__card-44 {
+  top: 62.5%;
+  left: 37.5%; }
+
+.mg__size-64 .mg__card-45 {
+  top: 62.5%;
+  left: 50%; }
+
+.mg__size-64 .mg__card-46 {
+  top: 62.5%;
+  left: 62.5%; }
+
+.mg__size-64 .mg__card-47 {
+  top: 62.5%;
+  left: 75%; }
+
+.mg__size-64 .mg__card-48 {
+  top: 62.5%;
+  left: 87.5%; }
+
+.mg__size-64 .mg__card-49 {
+  top: 75%;
+  left: 0%; }
+
+.mg__size-64 .mg__card-50 {
+  top: 75%;
+  left: 12.5%; }
+
+.mg__size-64 .mg__card-51 {
+  top: 75%;
+  left: 25%; }
+
+.mg__size-64 .mg__card-52 {
+  top: 75%;
+  left: 37.5%; }
+
+.mg__size-64 .mg__card-53 {
+  top: 75%;
+  left: 50%; }
+
+.mg__size-64 .mg__card-54 {
+  top: 75%;
+  left: 62.5%; }
+
+.mg__size-64 .mg__card-55 {
+  top: 75%;
+  left: 75%; }
+
+.mg__size-64 .mg__card-56 {
+  top: 75%;
+  left: 87.5%; }
+
+.mg__size-64 .mg__card-57 {
+  top: 87.5%;
+  left: 0%; }
+
+.mg__size-64 .mg__card-58 {
+  top: 87.5%;
+  left: 12.5%; }
+
+.mg__size-64 .mg__card-59 {
+  top: 87.5%;
+  left: 25%; }
+
+.mg__size-64 .mg__card-60 {
+  top: 87.5%;
+  left: 37.5%; }
+
+.mg__size-64 .mg__card-61 {
+  top: 87.5%;
+  left: 50%; }
+
+.mg__size-64 .mg__card-62 {
+  top: 87.5%;
+  left: 62.5%; }
+
+.mg__size-64 .mg__card-63 {
+  top: 87.5%;
+  left: 75%; }
+
+.mg__size-64 .mg__card-64 {
+  top: 87.5%;
+  left: 87.5%; }
+
+.mg__card--inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: pointer; }
+
+.mg__card--outside,
+.mg__card--inside {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 90%;
+  height: 90%;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-transition: background 0.5s, -webkit-transform 0.5s;
+  transition: background 0.5s, -webkit-transform 0.5s;
+  transition: transform 0.5s, background 0.5s;
+  transition: transform 0.5s, background 0.5s, -webkit-transform 0.5s; }
+
+.mg__card--outside {
+  background-color: #b4b4b4;
+  -webkit-box-shadow: 0 0 0 1px #787878;
+          box-shadow: 0 0 0 1px #787878; }
+
+.mg__card--inside {
+  background-color: white;
+  -webkit-box-shadow: 0 0 0 1px #787878;
+          box-shadow: 0 0 0 1px #787878;
+  -webkit-transform: rotateY(-180deg);
+          transform: rotateY(-180deg); }
+
+.mg__card--inner.flipped .mg__card--outside {
+  -webkit-transform: rotateY(-180deg);
+          transform: rotateY(-180deg); }
+
+.mg__card--inner.flipped .mg__card--inside {
+  -webkit-transform: rotateY(0);
+          transform: rotateY(0); }
+
+.mg__card--inner.solved {
+  cursor: default; }
+  .mg__card--inner.solved .mg__card--outside,
+  .mg__card--inner.solved .mg__card--inside {
+    opacity: 0;
+    -webkit-transition-property: opacity;
+    transition-property: opacity;
+    -webkit-transition-duration: 1s;
+            transition-duration: 1s; }
+
+.mg__button {
+  margin: 0;
+  padding: 5px;
+  font-family: "Roboto Slab", sans-serif;
+  font-size: 14px;
+  border: none;
+  border-radius: 3px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  cursor: pointer; }
+  .mg__button.mg__button--selected {
+    border: 3px solid #e6e61e; }
+
+.mg__button--action {
+  color: white;
+  background: #28c850;
+  border: 3px solid #28c850; }
+
+.mg__button--info {
+  color: white;
+  background: #28aadc;
+  border: 3px solid #28aadc; }
+
+.mg__button--cancel {
+  color: white;
+  background: #ff3c50;
+  border: 3px solid #ff3c50; }
+
+.mg__button--disabled {
+  color: white;
+  background: #b4b4b4;
+  border: 3px solid #b4b4b4; }
+
+body,
+html {
+  height: 100%; }
+
+body {
+  color: #787878;
+  background-color: #28aadc;
+  font-family: "Roboto Slab", sans-serif;
+  font-size: 18px; }
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto; }
+
+.container {
+  max-width: 1024px;
+  min-width: 480px;
+  margin: auto; }
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXBwLmNzcyIsInNvdXJjZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Iiwic291cmNlUm9vdCI6IiJ9*/

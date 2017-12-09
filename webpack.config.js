@@ -1,6 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
-const ExtractTextPlugin = require("extract-text-webpack-plugin")
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+var autoprefixer = require("autoprefixer");
 const NODE_ENV = process.env.NODE_ENV || "development";
 
 module.exports = {
@@ -26,20 +27,52 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /(node_modules|bower_components)/,
-                use: [
-                    {
-                        loader: "babel-loader",
-                        options: { presets: ["env"] }
-                    }
-                ]
+                use: [{
+                    loader: "babel-loader",
+                    options: { presets: ["env"] }
+                }]
             },
             {
-                test: /\.scss$/,
+                test: /\.sc?ss$/,
                 use: ExtractTextPlugin.extract({
-                  fallback: "style-loader",
-                  use: ["css-loader", "sass-loader"]
+                    fallback: "style-loader",
+                    use: ["css-loader", "postcss-loader", "sass-loader"]
                 })
-              }
+            }
+            // {
+            //     test: /\.scss$/,
+            //     use: [
+            //         {
+            //             loader: "style-loader"
+            //         },
+            //         {
+            //             loader: "css-loader",
+            //             options: {
+            //                 sourceMap: true
+            //             }
+            //         },
+            //         {
+            //             loader: "postcss-loader",
+            //             options: {
+            //                 plugins: [
+            //                     autoprefixer({
+            //                         browsers: ["ie >= 8", "last 4 version"]
+            //                     })
+            //                 ],
+            //                 sourceMap: true
+            //             }
+            //         },
+            //         {
+            //             loader: "sass-loader",
+            //             options: {
+            //                 includePaths: [
+            //                     helpers.root("src", "styles", "global"),
+            //                 ],
+            //                 sourceMap: true
+            //             }
+            //         }
+            //     ],
+            // },
         ]
     },
     plugins: [
@@ -47,6 +80,11 @@ module.exports = {
         new webpack.NoEmitOnErrorsPlugin(),
         new webpack.DefinePlugin({
             NODE_ENV: JSON.stringify(NODE_ENV)
+        }),
+        new webpack.LoaderOptionsPlugin({
+            options: {
+                postcss: [autoprefixer()]
+            }
         })
     ],
     watch: NODE_ENV == "development",
