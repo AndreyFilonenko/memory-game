@@ -10,43 +10,48 @@ export default class Game {
 	 * @param {Number} maxFieldSize Max quantity of card to generete field
 	 */
     constructor(fieldSize, maxFieldSize) {
-        this.gameField = Game.getNewGameField(fieldSize, maxFieldSize);
-        this.timer = new Timer();
-        this.clicks = 0;
-        this.startTimeoutId = null;
-        this.isFirstClicked = false;
-        this.firstClickedId = null;
-        this.state = "stop";
-        this.unresolvedCount = fieldSize / 2;
+        this._gameField = Game.getNewGameField(fieldSize, maxFieldSize);
+        this._timer = new Timer();
+        this._clicks = 0;
+        this._isFirstClicked = false;
+        this._firstClickedId = null;
+        this._state = "stop";
+        this._unresolvedCount = fieldSize / 2;
     }
 
     /**
      * Start the game.
      */
     start() {
-        this.timer.start();
-        this.state = "run";
+        this._timer.start();
+        this._state = "run";
     }
 
     /**
-     *Suspend or resume game.
+     * Suspend or resume game.
+     * 
+     * @returns {Boolean} State of game process
      */
     suspendOrResume() {
-        if (this.state === "run") {
-            this.timer.stop();
-            this.state = "suspended";
-        } else if (this.state === "suspended") {
-            this.timer.start();
-            this.state = "run";
+        let isPaused;
+        if (this._state === "run") {
+            this._timer.stop();
+            this._state = "suspended";
+            isPaused = true;
+        } else if (this._state === "suspended") {
+            this._timer.start();
+            this._state = "run";
+            isPaused = false;
         }
+        return isPaused;
     }
 
     /**
      * Stop the game.
      */
     end() {
-        this.timer.stop();
-        this.state = "stop";
+        this._timer.stop();
+        this._state = "stop";
     }
 
     /**
@@ -57,27 +62,45 @@ export default class Game {
      * @returns {String} State of current clicked card
      */
     cardClickHandler(position) {
-        this.clicks++;
+        this._clicks++;
         let result = "";
-        if (this.isFirstClicked === false) {
-            this.isFirstClicked = true;
-            this.firstClickedId = this.gameField[position - 1].id;
+        if (this._isFirstClicked === false) {
+            this._isFirstClicked = true;
+            this._firstClickedId = this._gameField[position - 1].id;
             result = "first";
         } 
         else {
-            if (this.firstClickedId === this.gameField[position - 1].id) {
+            if (this._firstClickedId === this._gameField[position - 1].id) {
                 result = "solved";
-                this.unresolvedCount--;
+                this._unresolvedCount--;
             } else {
                 result = "second";
             }
-            this.isFirstClicked = false;
-            this.firstClickedId = null;
+            this._isFirstClicked = false;
+            this._firstClickedId = null;
         }        
-        if (this.unresolvedCount <= 0) {
+        if (this._unresolvedCount <= 0) {
             result = "end";
         }
         return result;
+    }
+
+    /**
+     * Determines game running status.
+     *     
+     * @returns {Boolean} True if game run, else in all other cases
+     */
+    isRun() {
+        return this._state === "run";
+    }
+
+    /**
+     * Card id's array getter property.
+     *     
+     * @returns {Array} Array with gamefield cards id's
+     */
+    get cardIds() {
+        return this._gameField.map(x => x.id);
     }
 
     /**
@@ -87,9 +110,9 @@ export default class Game {
      */
     get score() {
         if (this.state === "stop") {
-            return this.gameField.length * 1000 
-            - this.clicks * 10
-            - Math.floor((this.timer.value * 10) / 1000);
+            return this._gameField.length * 100 
+                - this._clicks * 10
+                - Math.floor((this._timer.value * 10) / 1000);
         }
     }
 
@@ -99,7 +122,25 @@ export default class Game {
      * @returns {Number} Size of current game field
      */
     get fieldSize() {
-        return this.gameField.length;
+        return this._gameField.length;
+    }
+
+    /**
+     * Elapsed time getter property.
+     *     
+     * @returns {Number} Time from the beginning of the game
+     */
+    get timeElapsed() {
+        return this._timer.value;
+    }
+
+    /**
+     * Clicks getter property.
+     *     
+     * @returns {Number} Clicks from the beginning of the game
+     */
+    get clicks() {
+        return this._clicks;
     }
 
     /** 

@@ -12,15 +12,15 @@ export default class GameController {
 	 */
     constructor(view, repo) {
         if (view instanceof GameView && repo instanceof ScoresRepository) {
-            this.view = view;
-            this.repo = repo;
+            this._view = view;
+            this._repo = repo;
         } else {
             throw new Error("Invalid GameController ctor args.");
         }
-        this.game = null;
-        this.intervalId = null;
-        this.firstClicked = null;
-        this.maxFieldSize = 16;
+        this._game = null;
+        this._intervalId = null;
+        this._firstClicked = null;
+        this._maxFieldSize = 16;
     }
 
     /**
@@ -29,17 +29,18 @@ export default class GameController {
      * @param {Number} maxFieldSize Size of max gamefield size
      */
     setMaxField(maxFieldSize) {
-        this.maxFieldSize = maxFieldSize;
+        this._maxFieldSize = maxFieldSize;
     }
 
     /**
      * Shows the main game menu.
      */
     showMenu() {
-        this.game = null;
-        this.view.renderMenu();
-        this.view.bindStartGame(this.startGame.bind(this));
-        this.view.bindShowScores(this.showScores.bind(this));
+        this._game = null;
+        this.stopRefresh();
+        this._view.renderMenu();
+        this._view.bindStartGame(this.startGame.bind(this));
+        this._view.bindShowScores(this.showScores.bind(this));
     }
 
     /**
@@ -48,20 +49,20 @@ export default class GameController {
      * @param {Number} fieldSize Size of game field
      */
     startGame(fieldSize) {
-        this.game = new Game(fieldSize, this.maxFieldSize); 
-        this.view.renderGame(this.game.gameField.map((x) => x.id));
-        this.view.flipAllCards();
+        this._game = new Game(fieldSize, this._maxFieldSize); 
+        this._view.renderGame(this._game.cardIds);
+        this._view.flipAllCards();
         window.setTimeout(() => {
-            this.view.flipAllCards();
-            this.game.start();
-            this.intervalId = window.setInterval(() => {
+            this._view.flipAllCards();
+            this._game.start();
+            this._intervalId = window.setInterval(() => {
                 this.refreshTime();
             }, 50);
-            this.view.enableSuspendButton();
+            this._view.enableSuspendButton();
         }, (fieldSize / 8) * 1000);
-        this.view.bindShowMenu(this.showMenu.bind(this));
-        this.view.bindCardClickHandler(this.cardClickHandler.bind(this));
-        this.view.bindSuspendOrResumeGame(this.suspendOrResumeGame.bind(this));
+        this._view.bindShowMenu(this.showMenu.bind(this));
+        this._view.bindCardClickHandler(this.cardClickHandler.bind(this));
+        this._view.bindSuspendOrResumeGame(this.suspendOrResumeGame.bind(this));
     }
 
     /**
@@ -70,22 +71,22 @@ export default class GameController {
      * @param {Number} position Position of card clicked
      */
     cardClickHandler(position) {
-        let result = this.game.cardClickHandler(position);
+        let result = this._game.cardClickHandler(position);
         window.setTimeout(() => {
             switch (result) {
                 case "first":
-                    this.firstClicked = position;
+                    this._firstClicked = position;
                     break;
 
                 case "second":
-                    this.view.flipBack(this.firstClicked);
-                    this.view.flipBack(position);
+                    this._view.flipBack(this._firstClicked);
+                    this._view.flipBack(position);
                     this.firstClickedId = null;
                     break;
 
                 case "solved":
-                    this.view.setSolved(this.firstClicked);
-                    this.view.setSolved(position);
+                    this._view.setSolved(this._firstClicked);
+                    this._view.setSolved(position);
                     this.firstClickedId = null;
                     break;
 
@@ -101,28 +102,40 @@ export default class GameController {
     }
 
     /**
-     *Suspend or resume game.
+     * Suspend or resume game.
+     * 
+     * @returns State of game process
      */
     suspendOrResumeGame() {
-        this.game.suspendOrResume();
+        this._game.suspendOrResume();
+        return this._game.isRun();
     }
 
     /**
      * Stop the game.
      */
     endGame() {
-        this.game.end();
-        clearInterval(this.intervalId);
-        this.intervalId = null;
+        this._game.end();
+        this.stopRefresh();
         this.showWinScreen();
+    }
+
+    /**
+     * Stop refresh of game stats in view.
+     */
+    stopRefresh() {
+        if (this._intervalId !== null) {
+            clearInterval(this._intervalId);
+            this._intervalId = null;
+        }
     }
 
     /**
 	 * Refresh the time counter.
 	 */
     refreshTime() {
-        if (this.game.state === "run") {
-            this.view.setValue("time", this.game.timer.value);
+        if (this._game.isRun()) {
+            this._view.setValue("time", this._game.timeElapsed);
         }
     }
     
@@ -130,8 +143,8 @@ export default class GameController {
 	 * Refresh the clicks counter.
 	 */
     refreshClicks() {
-        if (this.game.state === "run") {
-            this.view.setValue("clicks", this.game.clicks);
+        if (this._game.isRun()) {
+            this._view.setValue("clicks", this._game.clicks);
         }
     }
 
@@ -139,11 +152,11 @@ export default class GameController {
 	 * Show the screen with game results.
 	 */
     showWinScreen() {
-        let duration = this.game.timer.value;
-        let score = this.game.score;
-        this.view.renderWinScreen(duration, score);
-        this.view.bindShowMenu(this.showMenu.bind(this));
-        this.view.bindSaveScore(this.saveScore.bind(this));
+        let duration = this._game.timeElapsed;
+        let score = this._game.score;
+        this._view.renderWinScreen(duration, score);
+        this._view.bindShowMenu(this.showMenu.bind(this));
+        this._view.bindSaveScore(this.saveScore.bind(this));
     }
 
     /**
@@ -152,14 +165,14 @@ export default class GameController {
 	 * @param {String} nickname Name of player
 	 */
     saveScore(nickname) {
-        this.repo.insert({
+        this._repo.insert({
             id: Date.now(),
             name: nickname,
-            size: this.game.fieldSize,
-            duration: this.game.timer.value,
-            score: this.game.score
+            size: this._game.fieldSize,
+            duration: this._game.timeElapsed,
+            score: this._game.score
         });
-        this.showScores(this.game.fieldSize);
+        this.showScores(this._game.fieldSize);
     }
 
     /**
@@ -170,12 +183,12 @@ export default class GameController {
 	 * @param {String} direction Called when the query is done
 	 */
     showScores(fieldSize = 16, sortKey = "name", direction = "asc") {
-        const scoresBySize = this.repo.getAllBySize(fieldSize);
+        const scoresBySize = this._repo.getAllBySize(fieldSize);
         const sortedScores = scoresBySize.slice(0).sort(Helpers.compareBy(sortKey, direction));
-        this.view.renderScores(fieldSize, sortedScores, sortKey, direction);
-        this.view.bindShowMenu(this.showMenu.bind(this));
-        this.view.bindShowScoresBySize(this.showScores.bind(this));
-        this.view.bindShowSortedScores(this.showScores.bind(this));
+        this._view.renderScores(fieldSize, sortedScores, sortKey, direction);
+        this._view.bindShowMenu(this.showMenu.bind(this));
+        this._view.bindShowScoresBySize(this.showScores.bind(this));
+        this._view.bindShowSortedScores(this.showScores.bind(this));
     }
 
     /**
@@ -210,8 +223,6 @@ export default class GameController {
                 score: i * 1000
             });
         }
-        for (let i = 0; i < fake.length; i++) {
-            this.repo.insert(fake[i]);
-        }
+        fake.forEach(f => this._repo.insert(f));
     }
 }

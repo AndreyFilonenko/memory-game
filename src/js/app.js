@@ -1,6 +1,6 @@
 /** 
  *  Application entry point
- *  Create instances of view? repo and controller, then load the game
+ *  Create instances of view, repo and controller, then load the game
  */
 
 "use strict"
@@ -28,10 +28,10 @@ const repo = new ScoresRepository("pairs-memory-game");
  */
 const controller = new GameController(view, repo);
 
-// Set max card quantity, currently 64
+// Set max cards quantity, currently 64
 controller.setMaxField(64);
 
-// Uncomment it to seed fake data in repo 
+// Uncomment this line to seed fake data in repo 
 //controller.setFakeRepoData();
 
 // Start app action when window loaded
