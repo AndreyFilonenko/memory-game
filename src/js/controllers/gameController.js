@@ -6,6 +6,10 @@ import ScoresRepository from "./../infrastructure/scoresRepository";
 import Helpers from "./../helpers/helpers";
 
 export default class GameController {
+    /**
+	 * @param {GameView} view GameView instance to inject
+	 * @param {ScoresRepository} repo ScoresRepository instance to inject
+	 */
     constructor(view, repo) {
         if (view instanceof GameView && repo instanceof ScoresRepository) {
             this.view = view;
@@ -19,10 +23,18 @@ export default class GameController {
         this.maxFieldSize = 16;
     }
 
+    /**
+     * Handle the click event on selected card.
+     *
+     * @param {Number} maxFieldSize Size of max gamefield size
+     */
     setMaxField(maxFieldSize) {
         this.maxFieldSize = maxFieldSize;
     }
 
+    /**
+     * Shows the main game menu.
+     */
     showMenu() {
         this.game = null;
         this.view.renderMenu();
@@ -30,9 +42,14 @@ export default class GameController {
         this.view.bindShowScores(this.showScores.bind(this));
     }
 
+    /**
+     * Handle the click event on selected card.
+     *
+     * @param {Number} fieldSize Size of game field
+     */
     startGame(fieldSize) {
         this.game = new Game(fieldSize, this.maxFieldSize); 
-        this.view.renderGame(this.game.gameField);
+        this.view.renderGame(this.game.gameField.map((x) => x.id));
         this.view.flipAllCards();
         window.setTimeout(() => {
             this.view.flipAllCards();
@@ -47,6 +64,11 @@ export default class GameController {
         this.view.bindSuspendOrResumeGame(this.suspendOrResumeGame.bind(this));
     }
 
+    /**
+     * Handle the click event on selected card.
+     *
+     * @param {Number} position Position of card clicked
+     */
     cardClickHandler(position) {
         let result = this.game.cardClickHandler(position);
         window.setTimeout(() => {
@@ -78,10 +100,16 @@ export default class GameController {
         this.refreshClicks();
     }
 
+    /**
+     *Suspend or resume game.
+     */
     suspendOrResumeGame() {
         this.game.suspendOrResume();
     }
 
+    /**
+     * Stop the game.
+     */
     endGame() {
         this.game.end();
         clearInterval(this.intervalId);
@@ -89,37 +117,58 @@ export default class GameController {
         this.showWinScreen();
     }
 
+    /**
+	 * Refresh the time counter.
+	 */
     refreshTime() {
         if (this.game.state === "run") {
-            this.view.setValue("time", this.game.timer.getCurrentValue());
+            this.view.setValue("time", this.game.timer.value);
         }
     }
-
+    
+    /**
+	 * Refresh the clicks counter.
+	 */
     refreshClicks() {
         if (this.game.state === "run") {
             this.view.setValue("clicks", this.game.clicks);
         }
     }
 
+    /**
+	 * Show the screen with game results.
+	 */
     showWinScreen() {
-        let duration = this.game.timer.getCurrentValue();
-        let score = this.game.getScore();
+        let duration = this.game.timer.value;
+        let score = this.game.score;
         this.view.renderWinScreen(duration, score);
         this.view.bindShowMenu(this.showMenu.bind(this));
         this.view.bindSaveScore(this.saveScore.bind(this));
     }
 
+    /**
+	 * Save the game results to scores repo.
+	 *
+	 * @param {String} nickname Name of player
+	 */
     saveScore(nickname) {
         this.repo.insert({
             id: Date.now(),
             name: nickname,
-            size: this.game.gameField.length,
-            duration: this.game.timer.getCurrentValue(),
-            score: this.game.getScore()
+            size: this.game.fieldSize,
+            duration: this.game.timer.value,
+            score: this.game.score
         });
-        this.showScores(this.game.gameField.length);
+        this.showScores(this.game.fieldSize);
     }
 
+    /**
+	 * Find items with properties matching those on query.
+	 *
+	 * @param {Number} fieldSize Query to match
+	 * @param {String} sortKey Called when the query is done
+	 * @param {String} direction Called when the query is done
+	 */
     showScores(fieldSize = 16, sortKey = "name", direction = "asc") {
         const scoresBySize = this.repo.getAllBySize(fieldSize);
         const sortedScores = scoresBySize.slice(0).sort(Helpers.compareBy(sortKey, direction));
@@ -129,6 +178,9 @@ export default class GameController {
         this.view.bindShowSortedScores(this.showScores.bind(this));
     }
 
+    /**
+	 * Seed scores repository with fake data for testing.	 
+	 */
     setFakeRepoData() {
         let fake = new Array();
         for (let i = 0; i < 10; i++) {

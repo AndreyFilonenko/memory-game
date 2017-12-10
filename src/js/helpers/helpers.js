@@ -1,7 +1,14 @@
 "use strict"
 
 export default class Helpers {
-
+    /**
+     * Static
+     * Format datetime to user-friendly string.
+     *
+     * @param {Number} timeSpan Timespan to generate output string
+     *
+     * @returns {String} Formatted date and time string in format dd.mm.yy - hh:mm:ss
+     */
     static getFormattedDateTime(timeSpan) {
         let dt = new Date(timeSpan);
 
@@ -22,9 +29,17 @@ export default class Helpers {
         let ss = dt.getSeconds();
         if (ss < 10) { ss = "0" + ss; }
 
-        return dd + "." + mm + "." + yy + " - " + hh + ":" + min + ":" + ss;
+        return `${dd}.${mm}.${yy} - ${hh}:${min}:${ss}`;
     }
 
+    /**
+     * Static
+     * Format seconds to user-friendly string.
+     *
+     * @param {Number} seconds Seconds count to generate output string
+     *
+     * @returns {String} Formatted time string with minutes and hours, if exists
+     */
     static getFormattedTime(seconds) {
         let retStr = "";
         if (seconds < 60) {
@@ -40,6 +55,14 @@ export default class Helpers {
         return retStr;
     }
 
+    /**
+     * Static
+     * Set array elements to random order.
+     *
+     * @param {Array} array Array to shuffle
+     *
+     * @returns {Array} Shuffled array
+     */
     static shuffle(array) {
         for (let i = array.length - 1; i > 0; --i) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -48,6 +71,15 @@ export default class Helpers {
         return array;
     }
 
+    /**
+     * Static
+     * Generate the custom comparer to sort function for sorting objects by field.
+     *
+     * @param {All} key Property to compare
+     * @param {All} order Direction to compare
+     *
+     * @returns {Function(a, b)} Custom comparer func
+     */
     static compareBy(key, order = "asc") {
         return function (a, b) {
             if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {

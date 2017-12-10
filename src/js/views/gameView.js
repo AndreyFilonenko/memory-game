@@ -3,6 +3,9 @@
 import Helpers from "./../helpers/helpers";
 
 export default class GameView {
+    /**
+	 * GameView ctor without params
+	 */
     constructor() {
         this.skinPath = null;
         this.gameFieldSize = null;
@@ -31,46 +34,52 @@ export default class GameView {
         this.container.appendChild(this.game);
     }
 
+    /**
+	 * Render the main game menu markup
+	 */
     renderMenu() {
         this.clearGame();
         this.skinPath = null;
         this.gameFieldSize = null;
         this.gameStart.innerHTML =
-            "<div class=\"mg__menu-line--centered\">\
-            <h2 class=\"mg__menu-heading\">Потренируйте свой мозг!</h2>\
-            <p class=\"mg__menu-text\">Это простая игра на память - необходимо запомнить положение карт и,\
-            поочередно переворачивая их, собрать пары и очистить игровое поле.</p>\
-            </div>\
-            <div class=\"mg__menu-line--centered\">\
-            <div class=\"mg__menu-line-item\">\
-            <h3 class=\"mg__menu-sub-heading\">Выберите размер поля:</h3>\
-            <ul class=\"mg__menu-size-select\">\
-            <li><span data-size=\"16\">Маленький (4 x 4)</span></li>\
-            <li><span data-size=\"36\">Средний (6 x 6)</span></li>\
-            <li><span data-size=\"64\">Большой (8 x 8)</span></li>\
-            </ul>\
-            </div>\
-            <div class=\"mg__menu-line-item\">\
-            <h3 class=\"mg__menu-sub-heading\">Выберите тему карт:</h3>\
-            <ul class=\"mg__menu-skin-select\">\
-            <li><span data-path=\"flags\">Флаги стран</span></li>\
-            <li><span data-path=\"new-year\">Новый год</span></li>\
-            <li><span data-path=\"outdoors\">Туризм</span></li>\
-            <li><span data-path=\"pokemons\">Покемоны</span></li>\
-            <li><span data-path=\"sports\">Спорт</span></li>\
-            </ul>\
-            </div>\
-            </div>\
-            <div class=\"mg__menu-line--centered\">\
-            <button id=\"mg__button--start\" class=\"mg__button mg__button--disabled\">Начать игру</button>\
-            </div>\
-            <div class=\"mg__menu-line--centered\">\
-            <button id=\"mg__button--scores\" class=\"mg__button mg__button--info\">Посмотреть рекорды</button>\
-            </div>";
+            `<div class="mg__menu-line--centered">
+            <h2 class="mg__menu-heading">Потренируйте свой мозг!</h2>
+            <p class="mg__menu-text">Это простая игра на память - необходимо запомнить положение карт и,
+            поочередно переворачивая их, собрать пары и очистить игровое поле.</p>
+            </div>
+            <div class="mg__menu-line--centered">
+            <div class="mg__menu-line-item">
+            <h3 class="mg__menu-sub-heading">Выберите размер поля:</h3>
+            <ul class="mg__menu-size-select">
+            <li><span data-size="16">Маленький (4 x 4)</span></li>
+            <li><span data-size="36">Средний (6 x 6)</span></li>
+            <li><span data-size="64">Большой (8 x 8)</span></li>
+            </ul>
+            </div>
+            <div class="mg__menu-line-item">
+            <h3 class="mg__menu-sub-heading">Выберите тему карт:</h3>
+            <ul class="mg__menu-skin-select">
+            <li><span data-path="flags">Флаги стран</span></li>
+            <li><span data-path="new-year">Новый год</span></li>
+            <li><span data-path="outdoors">Туризм</span></li>
+            <li><span data-path="pokemons">Покемоны</span></li>
+            <li><span data-path="sports">Спорт</span></li>
+            </ul>
+            </div>
+            </div>
+            <div class="mg__menu-line--centered">
+            <button id="mg__button--start" class="mg__button mg__button--disabled">Начать игру</button>
+            </div>
+            <div class="mg__menu-line--centered">
+            <button id="mg__button--scores" class="mg__button mg__button--info">Посмотреть рекорды</button>
+            </div>`;
         this.game.appendChild(this.gameStart);
         this.setMenuEvents();
     }
 
+    /**
+	 * Set event handlers for "view" actions in main menu
+	 */
     setMenuEvents() {
         let start = document.querySelector("#mg__button--start");
 
@@ -105,50 +114,54 @@ export default class GameView {
         }
     }
 
-    renderGame(cards) {
-        if (!cards || cards.length !== this.gameFieldSize) {
+    /**
+	 * Render the game action markup
+     * 
+     * @param {Array} cardIds Array of card id's in right order
+	 */
+    renderGame(cardIds) {
+        if (!cardIds || cardIds.length !== this.gameFieldSize) {
             throw new Error("Invalid GameView renderGame args.");
         }
         this.clearGame();
         this.gameAction.innerHTML =
-            "<div class=\"mg__game-line--centered\">\
-            <div class=\"mg__game-line-item\">\
-            <span>Количество ходов:</span>\
-            </div>\
-            <div class=\"mg__game-line-item\">\
-            <span id=\"mg__game-clicks\" class=\"mg__game-clicks\">0</span>\
-            </div>\
-            <div class=\"mg__game-line-item\">\
-            <span>Прошло времени:</span>\
-            </div>\
-            <div class=\"mg__game-line-item\">\
-            <span id=\"mg__game-time\" class=\"mg__game-time\">0</span>\
-            </div>\
-            <div class=\"mg__game-line-item\">\
-            <button id=\"mg__button--suspend\" class=\"mg__button mg__button--disabled\">Пауза</button>\
-            </div>\
-            <div class=\"mg__game-line-item\">\
-            <button id=\"mg__button--reset\" class=\"mg__button mg__button--cancel\">В меню</button>\
-            </div>\
-            </div>";
+            `<div class="mg__game-line--centered">
+            <div class="mg__game-line-item">
+            <span>Количество ходов:</span>
+            </div>
+            <div class="mg__game-line-item">
+            <span id="mg__game-clicks" class="mg__game-clicks">0</span>
+            </div>
+            <div class="mg__game-line-item">
+            <span>Прошло времени:</span>
+            </div>
+            <div class="mg__game-line-item">
+            <span id="mg__game-time" class="mg__game-time">0</span>
+            </div>
+            <div class="mg__game-line-item">
+            <button id="mg__button--suspend" class="mg__button mg__button--disabled">Пауза</button>
+            </div>
+            <div class="mg__game-line-item">
+            <button id="mg__button--reset" class="mg__button mg__button--cancel">В меню</button>
+            </div>
+            </div>`;
 
         this.gameActionWrapper = document.createElement("div");
         this.gameActionWrapper.className = "mg__wrapper";
         this.gameActionContainer = document.createElement("div");
-        this.gameActionContainer.className = "mg__contents mg__size-" + this.gameFieldSize;
+        this.gameActionContainer.className = `mg__contents mg__size-${this.gameFieldSize}`;
         this.gameActionContainer.id = "mg__contents";
 
         let path = this.skinPath;
-        for (let i = 0; i < cards.length; i++) {
-            let n = cards[i].cardId;
+        for (let i = 0; i < cardIds.length; i++) {
+            let n = cardIds[i];
             this.gameActionContainer.innerHTML +=
-                "<div class=\"mg__card mg__card-" + (i + 1) + "\">\
-                <div class=\"mg__card--inner\" data-position=\"" + (i + 1) + "\">\
-                <span class=\"mg__card--outside\"><img src=\"img/" + path + "/00.png\"></span>\
-                <span class=\"mg__card--inside\"><img src=\"img/"
-                + path + "/" + (n >= 10 ? "" : "0") + n + ".png\"></span>\
-                </div>\
-                </div>";
+                `<div class="mg__card mg__card-${(i + 1)}">
+                <div class="mg__card--inner" data-position="${(i + 1)}">
+                <span class="mg__card--outside"><img src="img/${path}/00.png"></span>
+                <span class="mg__card--inside"><img src="img/${path}/${(n >= 10 ? "" : "0")}${n}.png"></span>
+                </div>
+                </div>`;
         }
         this.gameActionWrapper.appendChild(this.gameActionContainer);
         this.gameAction.appendChild(this.gameActionWrapper);
@@ -161,6 +174,9 @@ export default class GameView {
         }
     }
 
+    /**
+	 * Set "flipped" class to all card elements
+	 */
     flipAllCards() {
         let cardNodes = document.querySelectorAll(".mg__card--inner");
         for (let i = 0; i < cardNodes.length; ++i) {
@@ -168,19 +184,33 @@ export default class GameView {
         }
     }
 
+    /**
+	 * Change class of "Suspend" button to "mg__button--action"  
+	 */
     enableSuspendButton() {
         let suspend = document.querySelector(".mg__button--disabled");
         suspend.classList.remove("mg__button--disabled");
         suspend.classList.add("mg__button--action");
     }
 
+    /**
+	 * Force card in selected position to flip
+     * 
+     * @param position Position of card to flip
+	 */
     flipBack(position) {
-        let flippedCard = document.querySelector(".mg__card-" + position + " .mg__card--inner");
+        let flippedCard = document.querySelector(`.mg__card-${position} .mg__card--inner`);
         if (flippedCard.parentNode !== null) {
             flippedCard.classList.remove("flipped");
         }
     }
 
+    /**
+	 * Change value of selected element
+     * 
+     * @param {HTMLNode} element Element, which value changed
+     * @param {String} value Value to change
+	 */
     setValue(element, value) {
         let counter = document.querySelector("#mg__game-" + element);
         if (counter.parentNode !== null) {
@@ -188,34 +218,48 @@ export default class GameView {
         }
     }
 
+    /**
+	 * Set card state to solved
+     * 
+     * @param {Nimber} position Position of card
+	 */
     setSolved(position) {
-        let solvedCard = document.querySelector(".mg__card-" + position + " .mg__card--inner");
+        let solvedCard = document.querySelector(`.mg__card-${position} .mg__card--inner`);
         if (solvedCard.parentNode !== null) {
             solvedCard.classList.add("solved");
         }
     }
 
+    /**
+	 * Render the end of game screen markup
+     * 
+     * @param {Number} duration Array of card id's in right order
+     * @param {Number} score Array of card id's in right order
+	 */
     renderWinScreen(duration, score) {
         this.clearGame();
         this.gameWin.innerHTML =
-            "<div class=\"mg__win-line--centered\">\
-            <h2 class=\"mg__win-heading\">Поздравляем! Вы выиграли!</h2>\
-            <p class=\"mg__win-text\">Вы справились за " + duration + " секунд. Ваш счет - " + score + ".</p>\
-            </div>\
-            <div class=\"mg__win-line--centered\">\
-            <h3 class=\"mg__win-sub-heading\">Введите свое имя для внесения записи в рекорды:</h3>\
-            </div>\
-            <div class=\"mg__win-line--centered\">\
-            <input type=\"text\" id=\"mg__win-input\" class=\"mg__win-input\" autofocus>\
-            <button id=\"mg__button--submit\" class=\"mg__button mg__button--disabled\">Внести</button>\
-            </div>\
-            <div class=\"mg__win-line--centered\">\
-            <button id=\"mg__button--reset\" class=\"mg__button mg__button--cancel\">В меню</button>\
-            </div>";
+            `<div class="mg__win-line--centered">
+            <h2 class="mg__win-heading">Поздравляем! Вы выиграли!</h2>
+            <p class="mg__win-text">Вы справились за ${duration} секунд. Ваш счет - ${score}.</p>
+            </div>
+            <div class="mg__win-line--centered">
+            <h3 class="mg__win-sub-heading">Введите свое имя для внесения записи в рекорды:</h3>
+            </div>
+            <div class="mg__win-line--centered">
+            <input type="text" id="mg__win-input" class="mg__win-input" autofocus>
+            <button id="mg__button--submit" class="mg__button mg__button--disabled">Внести</button>
+            </div>
+            <div class="mg__win-line--centered">
+            <button id="mg__button--reset" class="mg__button mg__button--cancel">В меню</button>
+            </div>`;
         this.game.appendChild(this.gameWin);
         this.setWinScreenEvents();
     }
 
+    /**
+	 * Set style events for input bar and submit button
+	 */
     setWinScreenEvents() {
         let input = document.querySelector("#mg__win-input");
         let submit = document.querySelector("#mg__button--submit");
@@ -231,57 +275,65 @@ export default class GameView {
         });
     }
 
+    /**
+	 * Render the scores screen markup
+     * 
+     * @param {Number} size Size of game to render scores by size
+     * @param {Array} scoresBySize Array of game scores by selected size
+     * @param {String} sortKey Key to sort the scores
+     * @param {String} sortDirection Direction to sort the scores
+	 */
     renderScores(size, scoresBySize, sortKey = "name", sortDirection = "asc") {
         this.clearGame();
         let table = 
-            "<table>\
-            <thead>\
-            <tr>\
-            <td class=\"mg__scores-table-heading\" data-tag=\"name\">Имя</td>\
-            <td class=\"mg__scores-table-heading\" data-tag=\"id\">Дата и время игры</td>\
-            <td class=\"mg__scores-table-heading\" data-tag=\"duration\">Длительность</td>\
-            <td class=\"mg__scores-table-heading\" data-tag=\"score\">Счет</td>\
-            </tr>\
-            </thead>\
-            <tbody>";
+            `<table>
+            <thead>
+            <tr>
+            <td class="mg__scores-table-heading" data-tag="name">Имя</td>
+            <td class="mg__scores-table-heading" data-tag="id">Дата и время игры</td>
+            <td class="mg__scores-table-heading" data-tag="duration">Длительность</td>
+            <td class="mg__scores-table-heading" data-tag="score">Счет</td>
+            </tr>
+            </thead>
+            <tbody>`;
         if (scoresBySize.length !== 0) {
             for (let i = 0; i < scoresBySize.length; i++) {
                 table +=
-                    "<tr><td>" + scoresBySize[i].name + "</td>\
-                    <td>" + Helpers.getFormattedDateTime(scoresBySize[i].id) + "</td>\
-                    <td>" + Helpers.getFormattedTime(scoresBySize[i].duration) + "</td>\
-                    <td>" + scoresBySize[i].score + "</td></tr>";
+                    `<tr><td>${scoresBySize[i].name}</td>
+                    <td>${Helpers.getFormattedDateTime(scoresBySize[i].id)}</td>
+                    <td>${Helpers.getFormattedTime(scoresBySize[i].duration)}</td>
+                    <td>${scoresBySize[i].score}</td></tr>`;
             }
         } else {
-            table += "<tr><td class=\"wide\" colspan=\"4\">Нет результатов игр на поле размером "
-                + size + ".</td></tr>";
+            table +=
+                `<tr><td class="wide" colspan="4">Нет результатов игр на поле размером ${size}.</td></tr>`;
         }
         table += "</tbody></table>";
         this.gameScores.innerHTML =
-            "<div class=\"mg__scores-line--centered\">\
-            <h2 class=\"mg__scores-heading\">Рекорды</h2>\
-            </div>\
-            <div class=\"mg__scores-line--centered\">\
-            <div class=\"mg__scores-line-item\">\
-            Размеры полей:\
-            </div>\
-            <div class=\"mg__scores-line-item\">\
-            <button data-size=\"16\" class=\"mg__button mg__button--action\">Маленькое</button>\
-            </div>\
-            <div class=\"mg__scores-line-item\">\
-            <button data-size=\"36\" class=\"mg__button mg__button--action\">Среднее</button>\
-            </div>\
-            <div class=\"mg__scores-line-item\">\
-            <button data-size=\"64\" class=\"mg__button mg__button--action\">Большое</button>\
-            </div>\
-            <div class=\"mg__scores-line-item\">\
-            <button id=\"mg__button--reset\" class=\"mg__button mg__button--cancel\">Назад в меню</button>\
-            </div>\
-            </div>\
-            <div class=\"mg__scores-line--centered\">\
-            <div id=\"mg__scores-table\" class=\"mg__scores-table\">" + table +
-            "</div>\
-            </div>";
+            `<div class="mg__scores-line--centered">
+            <h2 class="mg__scores-heading">Рекорды</h2>
+            </div>
+            <div class="mg__scores-line--centered">
+            <div class="mg__scores-line-item">
+            Размеры полей:
+            </div>
+            <div class="mg__scores-line-item">
+            <button data-size="16" class="mg__button mg__button--action">Маленькое</button>
+            </div>
+            <div class="mg__scores-line-item">
+            <button data-size="36" class="mg__button mg__button--action">Среднее</button>
+            </div>
+            <div class="mg__scores-line-item">
+            <button data-size="64" class="mg__button mg__button--action">Большое</button>
+            </div>
+            <div class="mg__scores-line-item">
+            <button id="mg__button--reset" class="mg__button mg__button--cancel">Назад в меню</button>
+            </div>
+            </div>
+            <div class="mg__scores-line--centered">
+            <div id="mg__scores-table" class="mg__scores-table">${table}
+            </div>
+            </div>`;
         this.game.appendChild(this.gameScores);
         let sizeButtons = document.querySelectorAll(".mg__button--action");
         for (let i = 0; i < sizeButtons.length; ++i) {
@@ -297,12 +349,13 @@ export default class GameView {
                 } else {
                     columnHeads[i].classList.add("selected--minus");
                 }
-            }
-            
-        }
-        
+            }            
+        }        
     }
 
+    /**
+	 * Remove all dom elements in game container
+	 */
     clearGame() {
         if (this.gameStart.parentNode !== null) {
             this.game.removeChild(this.gameStart);
@@ -318,12 +371,22 @@ export default class GameView {
         }
     }
 
+    /**
+	 * Set event handler for "controller" actions in main menu
+     * 
+     *  @param {Function()} handler Handler binded in gameController
+	 */
     bindShowMenu(handler) {
         document.querySelector("#mg__button--reset").addEventListener("click", () => {
             handler();
         });
     }
 
+    /**
+	 * Set event handler for "controller" actions in game action screen
+     * 
+     *  @param {Function()} handler Handler binded in gameController
+	 */
     bindStartGame(handler) {
         document.querySelector("#mg__button--start").addEventListener("click", () => {
             if (this.gameFieldSize !== null && this.skinPath !== null) {
@@ -332,6 +395,11 @@ export default class GameView {
         });
     }
 
+    /**
+	 * Set event handler for "controller" actions for "Suspend" button
+     * 
+     *  @param {Function()} handler Handler binded in gameController
+	 */
     bindSuspendOrResumeGame(handler) {
         let suspend = document.querySelector("#mg__button--suspend");
         let cardNodes = document.querySelectorAll(".mg__card--inner");
@@ -358,6 +426,11 @@ export default class GameView {
         });
     }
 
+    /**
+	 * Set event handlers for "controller" actions for all cards in game action screen
+     * 
+     *  @param {Function()} handler Handler binded in gameController
+	 */
     bindCardClickHandler(handler) {
         let cards = document.querySelectorAll(".mg__card--inner");
         for (let i = 0; i < cards.length; i++) {
@@ -372,12 +445,22 @@ export default class GameView {
         }
     }
 
+    /**
+	 * Set event handler for "controller" actions in scores screen
+     * 
+     *  @param {Function()} handler Handler binded in gameController
+	 */
     bindShowScores(handler) {
         document.querySelector("#mg__button--scores").addEventListener("click", () => {
             handler();
         });
     }
 
+    /**
+	 * Set event handlers for "controller" actions for game size buttons
+     * 
+     *  @param {Function()} handler Handler binded in gameController
+	 */
     bindShowScoresBySize(handler) {
         let sizeButtons = document.querySelectorAll(".mg__button--action");
         for (let i = 0; i < sizeButtons.length; i++) {
@@ -387,6 +470,11 @@ export default class GameView {
         }
     }
 
+    /**
+	 * Set event handlers for "controller" actions for headings of score table
+     * 
+     *  @param {Function()} handler Handler binded in gameController
+	 */
     bindShowSortedScores(handler) {
         let colHeads = document.querySelectorAll(".mg__scores-table-heading");
         let activeSizeButton = document.querySelector(".mg__button--selected");
@@ -404,6 +492,11 @@ export default class GameView {
         }
     }
 
+    /**
+	 * Set event handler for "controller" actions for score submit button
+     * 
+     *  @param {Function()} handler Handler binded in gameController
+	 */
     bindSaveScore(handler) {
         let input = document.querySelector("#mg__win-input");
         document.querySelector("#mg__button--submit").addEventListener("click", () => {

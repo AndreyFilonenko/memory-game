@@ -1,32 +1,46 @@
 "use strict"
 
 export default class Timer {
+    /**
+	 * Timer ctor without params
+	 */
     constructor() {
-        this.value = 0;
-        this.state = "stopped";
-        this.startTime = null;
+        this._value = 0;
+        this._state = "stopped";
+        this._startTime = null;
     }
 
+    /**
+	 * Start the timer
+	 */
     start() {
-        if (this.state === "stopped") {
-            this.state = "started";
-            this.startTime = Date.now();
+        if (this._state === "stopped") {
+            this._state = "started";
+            this._startTime = Date.now();
         }
     }
 
+    /**
+	 * Stop the timer
+	 */
     stop() {
-        if (this.state === "started") {
-            this.state = "stopped";
-            this.value += Math.round((Date.now() - this.startTime) / 1000);
-            this.startTime = null;
+        if (this._state === "started") {
+            this._state = "stopped";
+            this._value += Math.round((Date.now() - this._startTime) / 1000);
+            this._startTime = null;
         }
     }
 
-    getCurrentValue() {
-        if (this.state === "started") {
-            return this.value + Math.round((Date.now() - this.startTime) / 1000);
+    /**
+     * Current timer value getter property.
+     *     
+     * @returns {Number} Current value of timer
+     */
+    get value() {
+        if (this._state === "started") {
+            return this._value + Math.round((Date.now() - this._startTime) / 1000);
         } else {
-            return this.value;
+            return this._value;
         }
     }
 }
