@@ -109,7 +109,7 @@ export default class Game {
      * @returns {Number} Current game score
      */
     get score() {
-        if (this.state === "stop") {
+        if (this._state === "stop") {
             return this._gameField.length * 100 
                 - this._clicks * 10
                 - Math.floor((this._timer.value * 10) / 1000);

@@ -165,12 +165,13 @@ export default class GameController {
 	 * @param {String} nickname Name of player
 	 */
     saveScore(nickname) {
+        console.log(this._game.score);
         this._repo.insert({
             id: Date.now(),
             name: nickname,
             size: this._game.fieldSize,
             duration: this._game.timeElapsed,
-            score: this._game.score
+            score: this._game.score            
         });
         this.showScores(this._game.fieldSize);
     }
