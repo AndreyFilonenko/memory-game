@@ -8,10 +8,7 @@
 import ScoresRepository from "./infrastructure/scoresRepository";
 import GameView from "./views/gameView";
 import GameController from "./controllers/gameController";
-import styles from "./../styles/sass/app.scss";
-
-// Only for webpack style loader
-console.log(styles.container);
+import "./../styles/sass/app.scss";
 
 /** 
  *  @type {GameView}

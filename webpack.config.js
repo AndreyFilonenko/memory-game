@@ -11,7 +11,8 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, "./build"),
-        filename: "[name].bundle.js"
+        filename: "[name].bundle.js",
+        sourceMapFilename: "[name].bundle.js.map",
     },
     devServer: {
         contentBase: __dirname + "/build",
@@ -53,9 +54,9 @@ module.exports = {
             }
         })
     ],
-    watch: NODE_ENV == "development",
+    watch: NODE_ENV === "development",
     watchOptions: {
         aggregateTimeout: 100
     },
-    devtool: NODE_ENV == "development" ? "cheap-inline-module-source-map" : null
+    devtool: NODE_ENV === "development" ? "cheap-inline-module-source-map" : null
 };

@@ -71,7 +71,7 @@ export default class GameController {
      * @param {Number} position Position of card clicked
      */
     cardClickHandler(position) {
-        let result = this._game.cardClickHandler(position);
+        const result = this._game.cardClickHandler(position);
         window.setTimeout(() => {
             switch (result) {
                 case "first":
