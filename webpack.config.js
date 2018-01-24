@@ -1,7 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-var autoprefixer = require("autoprefixer");
+const autoprefixer = require("autoprefixer");
 const NODE_ENV = process.env.NODE_ENV || "development";
 
 module.exports = {
@@ -34,7 +34,7 @@ module.exports = {
                 }]
             },
             {
-                test: /\.sc?ss$/,
+                test: /\.s?css$/,
                 use: ExtractTextPlugin.extract({
                     fallback: "style-loader",
                     use: ["css-loader", "postcss-loader", "sass-loader"]
