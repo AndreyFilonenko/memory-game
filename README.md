@@ -9,7 +9,7 @@ This app built using HTML, CSS, and plain JavaScript without any outer libraries
 ### Demo ###
 
 A working demo temporary placed here:
-[http://filonenkoav.github.io/](http://filonenkoav.github.io/)
+[http://filonenkoav.github.io/memory-game](http://filonenkoav.github.io/memory-game)
 
 ### Usage ###
 
