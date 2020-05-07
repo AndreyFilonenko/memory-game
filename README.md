@@ -9,11 +9,11 @@ This app built using HTML, CSS, and plain JavaScript without any outer libraries
 ### Demo ###
 
 A working demo temporary placed here:
-[http://filonenkoav.github.io/memory-game](http://filonenkoav.github.io/memory-game)
+[http://andreyfilonenko.github.io/memory-game](http://andreyfilonenko.github.io/memory-game)
 
 ### Usage ###
 
-1. At first, download archive from [here](https://github.com/FilonenkoAV/memory-game/archive/master.zip), unpack it and get the game files from build folder (**img** and **fonts** folders, **.js** and **.css** files), and place it in the root folder of your website.
+1. At first, download archive from [here](https://github.com/AndreyFilonenko/memory-game/archive/master.zip), unpack it and get the game files from build folder (**img** and **fonts** folders, **.js** and **.css** files), and place it in the root folder of your website.
 
 2. Markup the empty **div** you want the game to exist in (similar to the following):
 
